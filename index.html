@@ -11,17 +11,21 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink: #0E0D0C;
-      --ink-soft: #1C1A18;
-      --ink-muted: #2A2724;
-      --cream: #F5F0E8;
-      --cream-dim: #CCC6BA;
-      --amber: #D4852A;
-      --amber-bright: #F0A030;
-      --amber-pale: #F5D7A0;
-      --teal: #2E8B7A;
-      --teal-bright: #3AADA0;
-      --red: #C0392B;
+      /* ── Brand palette ── */
+      --navy:       #0F284D;
+      --navy-deep:  #021638;
+      --navy-mid:   #182943;
+      --cyan:       #00c6fb;
+      --cyan-dim:   #34dee8;
+      --cyan-pale:  #93e9f6;
+      --blue:       #0080FE;
+      --orange:     #de6906;
+      --orange-bright: #f07920;
+      --white:      #ffffff;
+      --white-dim:  rgba(255,255,255,0.72);
+      --white-muted:rgba(255,255,255,0.38);
+      --grad: linear-gradient(45deg, #00c6fb 0%, #0F284D 100%);
+      --grad-r: linear-gradient(45deg, #0F284D 0%, #00c6fb 100%);
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-body: 'DM Sans', system-ui, sans-serif;
     }
@@ -29,8 +33,8 @@
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--ink);
-      color: var(--cream);
+      background: var(--navy-deep);
+      color: var(--white);
       font-family: var(--font-body);
       font-size: 16px;
       line-height: 1.6;
@@ -42,27 +46,22 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 1.25rem 2.5rem;
+      padding: 0.9rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background 0.4s, backdrop-filter 0.4s;
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
     }
     nav.scrolled {
-      background: rgba(14,13,12,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(212,133,42,0.15);
+      background: rgba(2,22,56,0.94);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(0,198,251,0.15);
     }
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--cream);
-      text-decoration: none;
-    }
-    .nav-logo span {
-      color: var(--amber);
+    .nav-logo img {
+      height: 48px;
+      width: auto;
+      display: block;
+      filter: brightness(1.1);
     }
     .nav-links {
       display: flex;
@@ -70,24 +69,24 @@
       list-style: none;
     }
     .nav-links a {
-      color: var(--cream-dim);
+      color: var(--white-dim);
       text-decoration: none;
       font-size: 0.825rem;
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--amber-bright); }
+    .nav-links a:hover { color: var(--cyan); }
     .nav-cta {
-      background: var(--amber);
-      color: var(--ink) !important;
+      background: var(--blue) !important;
+      color: var(--white) !important;
       padding: 0.5rem 1.25rem;
-      border-radius: 2px;
+      border-radius: 3px;
       font-weight: 700 !important;
-      transition: background 0.2s !important;
+      transition: background 0.2s !important, transform 0.2s !important;
     }
-    .nav-cta:hover { background: var(--amber-bright) !important; color: var(--ink) !important; }
+    .nav-cta:hover { background: var(--orange) !important; transform: translateY(-1px); }
 
     /* ─── HERO ─── */
     .hero {
@@ -100,14 +99,19 @@
     .hero-bg {
       position: absolute;
       inset: 0;
+      background: var(--grad);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(212,133,42,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(46,139,122,0.06) 0%, transparent 50%);
+        radial-gradient(ellipse 60% 50% at 100% 50%, rgba(0,198,251,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 0% 80%, rgba(2,22,56,0.8) 0%, transparent 70%);
     }
     .hero-noise {
       position: absolute;
       inset: 0;
-      opacity: 0.03;
+      opacity: 0.04;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
       background-size: 200px;
     }
@@ -120,12 +124,11 @@
       z-index: 1;
     }
     .hero-eyebrow {
-      font-family: var(--font-body);
       font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--cyan);
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
@@ -135,34 +138,36 @@
       content: '';
       width: 2rem;
       height: 1px;
-      background: var(--amber);
+      background: var(--cyan);
     }
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
       font-weight: 300;
       line-height: 1.05;
-      letter-spacing: -0.01em;
-      color: var(--cream);
+      color: var(--white);
       margin-bottom: 0.25rem;
     }
     .hero-title strong {
       font-weight: 700;
-      color: var(--amber-bright);
       display: block;
-      font-style: italic;
+      background: linear-gradient(90deg, #ffffff 0%, #93e9f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .hero-title em {
       font-style: italic;
-      color: var(--cream-dim);
+      color: var(--cyan-pale);
+      font-size: 0.65em;
     }
     .hero-subtitle {
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 300;
-      color: var(--cream-dim);
+      color: var(--white-dim);
       max-width: 420px;
       margin: 1.75rem 0 2.5rem;
-      line-height: 1.7;
+      line-height: 1.75;
     }
     .hero-actions {
       display: flex;
@@ -170,8 +175,8 @@
       flex-wrap: wrap;
     }
     .btn-primary {
-      background: var(--amber);
-      color: var(--ink);
+      background: var(--blue);
+      color: var(--white);
       padding: 0.9rem 2rem;
       font-family: var(--font-body);
       font-size: 0.85rem;
@@ -181,15 +186,16 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
+      border-radius: 3px;
       transition: background 0.2s, transform 0.2s;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
     }
-    .btn-primary:hover { background: var(--amber-bright); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--orange); transform: translateY(-1px); }
     .btn-outline {
       background: transparent;
-      color: var(--cream);
+      color: var(--white);
       padding: 0.9rem 2rem;
       font-family: var(--font-body);
       font-size: 0.85rem;
@@ -197,11 +203,12 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 1px solid rgba(245,240,232,0.25);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 3px;
       cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
     }
-    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,198,251,0.06); }
 
     .hero-right {
       position: relative;
@@ -215,23 +222,24 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1px;
-      background: rgba(212,133,42,0.15);
-      border: 1px solid rgba(212,133,42,0.15);
+      background: rgba(0,198,251,0.2);
+      border: 1px solid rgba(0,198,251,0.2);
       width: 100%;
       max-width: 400px;
     }
     .stat-block {
-      background: var(--ink-soft);
+      background: rgba(2,22,56,0.6);
+      backdrop-filter: blur(8px);
       padding: 2.5rem 2rem;
       transition: background 0.3s;
     }
-    .stat-block:hover { background: var(--ink-muted); }
+    .stat-block:hover { background: rgba(15,40,77,0.8); }
     .stat-number {
       font-family: var(--font-display);
       font-size: 3.5rem;
       font-weight: 700;
       line-height: 1;
-      color: var(--amber-bright);
+      color: var(--cyan);
       margin-bottom: 0.5rem;
     }
     .stat-label {
@@ -239,10 +247,10 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--cream-dim);
+      color: var(--white-dim);
     }
 
-    /* ─── SCROLL INDICATOR ─── */
+    /* ─── SCROLL HINT ─── */
     .scroll-hint {
       position: absolute;
       bottom: 2.5rem;
@@ -255,43 +263,40 @@
     .scroll-line {
       width: 1px;
       height: 3rem;
-      background: linear-gradient(to bottom, var(--amber), transparent);
+      background: linear-gradient(to bottom, var(--cyan), transparent);
       animation: scrollPulse 2s ease-in-out infinite;
     }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
     .scroll-text {
       font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--cream-dim);
+      color: var(--white-muted);
       writing-mode: vertical-rl;
     }
 
     /* ─── TICKER ─── */
     .ticker-wrap {
-      background: var(--amber);
+      background: var(--navy);
+      border-top: 1px solid rgba(0,198,251,0.25);
+      border-bottom: 1px solid rgba(0,198,251,0.25);
       padding: 0.65rem 0;
       overflow: hidden;
       white-space: nowrap;
     }
     .ticker-track {
       display: inline-flex;
-      animation: ticker 28s linear infinite;
+      animation: ticker 30s linear infinite;
     }
     .ticker-item {
       font-size: 0.7rem;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--ink);
+      color: var(--cyan-pale);
       padding: 0 2.5rem;
     }
-    .ticker-dot {
-      color: rgba(14,13,12,0.4);
-    }
+    .ticker-dot { color: var(--cyan); }
     @keyframes ticker {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
@@ -304,7 +309,7 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--cyan);
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -314,28 +319,28 @@
       content: '';
       width: 1.5rem;
       height: 1px;
-      background: var(--amber);
+      background: var(--cyan);
     }
     .section-title {
       font-family: var(--font-display);
       font-size: clamp(2.2rem, 4vw, 3.5rem);
       font-weight: 300;
       line-height: 1.1;
-      color: var(--cream);
+      color: var(--white);
       margin-bottom: 1.5rem;
     }
     .section-title strong { font-weight: 700; }
-    .section-title em { font-style: italic; color: var(--amber-bright); }
+    .section-title em { font-style: italic; color: var(--cyan); }
     .section-lead {
-      font-size: 1.05rem;
-      color: var(--cream-dim);
+      font-size: 1rem;
+      color: var(--white-dim);
       max-width: 560px;
       line-height: 1.8;
     }
 
     /* ─── AREAS ─── */
     .areas-section {
-      background: var(--ink-soft);
+      background: var(--navy);
       padding: 6rem 5rem;
     }
     .areas-header {
@@ -349,10 +354,10 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: rgba(245,240,232,0.06);
+      background: rgba(0,198,251,0.08);
     }
     .area-card {
-      background: var(--ink-soft);
+      background: var(--navy);
       padding: 2.75rem 2.5rem;
       border-top: 3px solid transparent;
       transition: border-color 0.3s, background 0.3s, transform 0.3s;
@@ -365,19 +370,19 @@
       position: absolute;
       bottom: 0; left: 0; right: 0;
       height: 0;
-      background: linear-gradient(to top, rgba(212,133,42,0.05), transparent);
+      background: linear-gradient(to top, rgba(0,198,251,0.06), transparent);
       transition: height 0.4s;
     }
     .area-card:hover::before { height: 100%; }
     .area-card:hover {
-      border-color: var(--amber);
-      background: var(--ink-muted);
+      border-color: var(--cyan);
+      background: var(--navy-mid);
       transform: translateY(-2px);
     }
     .area-icon {
       width: 2.5rem;
       height: 2.5rem;
-      background: rgba(212,133,42,0.12);
+      background: rgba(0,198,251,0.1);
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -386,35 +391,35 @@
       font-size: 1.1rem;
       transition: background 0.3s;
     }
-    .area-card:hover .area-icon { background: rgba(212,133,42,0.25); }
+    .area-card:hover .area-icon { background: rgba(0,198,251,0.22); }
     .area-title {
       font-family: var(--font-display);
       font-size: 1.5rem;
       font-weight: 600;
-      color: var(--cream);
+      color: var(--white);
       margin-bottom: 0.75rem;
       line-height: 1.2;
     }
     .area-desc {
       font-size: 0.875rem;
-      color: var(--cream-dim);
+      color: var(--white-dim);
       line-height: 1.7;
     }
-    .area-count {
+    .area-arrow {
       margin-top: 1.5rem;
       font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--cyan);
       opacity: 0;
       transform: translateY(4px);
       transition: opacity 0.3s, transform 0.3s;
     }
-    .area-card:hover .area-count { opacity: 1; transform: translateY(0); }
+    .area-card:hover .area-arrow { opacity: 1; transform: translateY(0); }
 
-    /* ─── FEATURED PROGRAMS ─── */
-    .programs-section { padding: 6rem 5rem; }
+    /* ─── PROGRAMS ─── */
+    .programs-section { padding: 6rem 5rem; background: var(--navy-deep); }
     .programs-header {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -428,27 +433,30 @@
       gap: 1.5rem;
     }
     .program-featured {
-      background: var(--ink-soft);
-      border: 1px solid rgba(245,240,232,0.06);
+      background: var(--navy);
+      border: 1px solid rgba(0,198,251,0.12);
       padding: 3rem;
       position: relative;
       overflow: hidden;
+      border-radius: 4px;
     }
     .program-featured::after {
       content: '';
       position: absolute;
-      top: 0; right: 0;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, rgba(212,133,42,0.15), transparent 70%);
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(0,198,251,0.12), transparent 70%);
+      pointer-events: none;
     }
     .program-tag {
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--amber);
-      background: rgba(212,133,42,0.1);
+      color: var(--cyan);
+      background: rgba(0,198,251,0.1);
       padding: 0.3rem 0.75rem;
+      border-radius: 2px;
       display: inline-block;
       margin-bottom: 1.25rem;
     }
@@ -456,13 +464,13 @@
       font-family: var(--font-display);
       font-size: 2rem;
       font-weight: 600;
-      color: var(--cream);
+      color: var(--white);
       line-height: 1.2;
       margin-bottom: 1rem;
     }
     .program-desc {
       font-size: 0.9rem;
-      color: var(--cream-dim);
+      color: var(--white-dim);
       line-height: 1.75;
       margin-bottom: 2rem;
     }
@@ -471,66 +479,71 @@
       gap: 1.5rem;
       margin-bottom: 2rem;
     }
-    .program-meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
+    .program-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
     .program-meta-val {
       font-family: var(--font-display);
       font-size: 1.4rem;
       font-weight: 700;
-      color: var(--amber-bright);
+      color: var(--cyan);
     }
     .program-meta-key {
       font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--cream-dim);
+      color: var(--white-muted);
     }
-    .program-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+    .program-stack { display: flex; flex-direction: column; gap: 1.5rem; }
     .program-card {
-      background: var(--ink-soft);
-      border: 1px solid rgba(245,240,232,0.06);
+      background: var(--navy);
+      border: 1px solid rgba(0,198,251,0.1);
       padding: 1.75rem 2rem;
+      border-radius: 4px;
       transition: border-color 0.3s, background 0.3s;
       cursor: pointer;
       flex: 1;
     }
-    .program-card:hover { border-color: rgba(212,133,42,0.4); background: var(--ink-muted); }
+    .program-card:hover { border-color: rgba(0,198,251,0.45); background: var(--navy-mid); }
     .program-card .program-name { font-size: 1.2rem; margin-bottom: 0.5rem; }
     .program-card .program-desc { font-size: 0.825rem; margin-bottom: 1.25rem; }
 
-    /* ─── OPPOSITION BAR ─── */
+    /* ─── OPOSICIONES BAR ─── */
     .opos-section {
-      background: var(--amber);
+      background: var(--grad);
       padding: 4rem 5rem;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 3rem;
       align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .opos-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+      opacity: 0.04;
     }
     .opos-title {
       font-family: var(--font-display);
       font-size: clamp(1.8rem, 3vw, 2.8rem);
       font-weight: 700;
-      color: var(--ink);
+      color: var(--white);
       line-height: 1.1;
+      position: relative;
     }
     .opos-title em { font-style: italic; font-weight: 300; }
     .opos-desc {
-      color: rgba(14,13,12,0.7);
+      color: rgba(255,255,255,0.75);
       font-size: 0.9rem;
       margin-top: 0.75rem;
       max-width: 600px;
+      position: relative;
     }
-    .btn-dark {
-      background: var(--ink);
-      color: var(--amber-bright);
+    .btn-white {
+      background: var(--white);
+      color: var(--navy-deep);
       padding: 1rem 2rem;
       font-family: var(--font-body);
       font-size: 0.85rem;
@@ -539,22 +552,20 @@
       text-transform: uppercase;
       text-decoration: none;
       white-space: nowrap;
-      transition: background 0.2s;
+      border-radius: 3px;
+      position: relative;
+      transition: background 0.2s, color 0.2s;
     }
-    .btn-dark:hover { background: var(--ink-soft); }
+    .btn-white:hover { background: var(--cyan-pale); }
 
-    /* ─── LANGUAGES & IT ─── */
-    .extra-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
+    /* ─── IDIOMAS + IT ─── */
+    .extra-section { display: grid; grid-template-columns: 1fr 1fr; }
     .extra-block {
       padding: 5rem;
       position: relative;
     }
-    .extra-block:first-child { background: var(--ink-soft); }
-    .extra-block:last-child { background: var(--ink-muted); }
+    .extra-block:first-child { background: var(--navy-mid); }
+    .extra-block:last-child { background: var(--navy); }
     .lang-tags {
       display: flex;
       flex-wrap: wrap;
@@ -562,20 +573,35 @@
       margin-top: 2rem;
     }
     .lang-tag {
-      background: rgba(58,173,160,0.1);
-      border: 1px solid rgba(58,173,160,0.25);
-      color: var(--teal-bright);
+      background: rgba(0,198,251,0.08);
+      border: 1px solid rgba(0,198,251,0.25);
+      color: var(--cyan-pale);
       padding: 0.4rem 1rem;
       font-size: 0.8rem;
       font-weight: 500;
       letter-spacing: 0.05em;
-      transition: background 0.2s;
+      border-radius: 2px;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .lang-tag:hover { background: rgba(58,173,160,0.2); }
+    .lang-tag:hover { background: rgba(0,198,251,0.18); border-color: var(--cyan); }
+    .lang-tag-alt {
+      background: rgba(0,128,254,0.08);
+      border: 1px solid rgba(0,128,254,0.3);
+      color: #93bfff;
+    }
+    .lang-tag-alt:hover { background: rgba(0,128,254,0.18); border-color: var(--blue); }
+
+    /* ─── RULE ─── */
+    .rule {
+      width: 3rem;
+      height: 2px;
+      background: var(--cyan);
+      margin: 1.5rem 0;
+    }
 
     /* ─── CONTACT ─── */
     .contact-section {
-      background: var(--ink-soft);
+      background: var(--navy-deep);
       padding: 6rem 5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -583,38 +609,28 @@
       align-items: start;
     }
     .contact-info { display: flex; flex-direction: column; gap: 2rem; }
-    .contact-item {
-      display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-    }
+    .contact-item { display: flex; gap: 1.25rem; align-items: flex-start; }
     .contact-icon {
       width: 2.5rem;
       height: 2.5rem;
-      background: rgba(212,133,42,0.12);
+      background: rgba(0,198,251,0.1);
+      border: 1px solid rgba(0,198,251,0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       font-size: 1rem;
-    }
-    .contact-val {
-      font-size: 1.1rem;
-      color: var(--cream);
-      font-weight: 500;
+      border-radius: 3px;
     }
     .contact-key {
       font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--cream-dim);
+      color: var(--white-muted);
       margin-bottom: 0.2rem;
     }
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+    .contact-val { font-size: 1.1rem; color: var(--white); font-weight: 500; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-label {
@@ -622,29 +638,29 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--cream-dim);
+      color: var(--white-dim);
     }
     .form-input, .form-select, .form-textarea {
-      background: var(--ink);
-      border: 1px solid rgba(245,240,232,0.1);
-      color: var(--cream);
+      background: var(--navy);
+      border: 1px solid rgba(0,198,251,0.15);
+      color: var(--white);
       padding: 0.85rem 1rem;
       font-family: var(--font-body);
       font-size: 0.9rem;
       transition: border-color 0.2s;
       outline: none;
       width: 100%;
+      border-radius: 3px;
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      border-color: var(--amber);
-    }
-    .form-select option { background: var(--ink); }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.28); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--cyan); }
+    .form-select option { background: var(--navy); }
     .form-textarea { resize: vertical; min-height: 100px; }
 
     /* ─── FOOTER ─── */
     footer {
-      background: var(--ink);
-      border-top: 1px solid rgba(245,240,232,0.06);
+      background: var(--navy-deep);
+      border-top: 1px solid rgba(0,198,251,0.12);
       padding: 3rem 5rem 2rem;
     }
     .footer-grid {
@@ -653,10 +669,10 @@
       gap: 3rem;
       margin-bottom: 3rem;
     }
-    .footer-brand .nav-logo { font-size: 1.3rem; display: block; margin-bottom: 0.75rem; }
+    .footer-logo { height: 44px; width: auto; margin-bottom: 1rem; display: block; }
     .footer-tagline {
       font-size: 0.85rem;
-      color: var(--cream-dim);
+      color: var(--white-dim);
       line-height: 1.7;
       max-width: 280px;
     }
@@ -665,44 +681,33 @@
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--amber);
+      color: var(--cyan);
       margin-bottom: 1.25rem;
     }
-    .footer-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
     .footer-links a {
       font-size: 0.875rem;
-      color: var(--cream-dim);
+      color: var(--white-dim);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-links a:hover { color: var(--amber-bright); }
+    .footer-links a:hover { color: var(--cyan); }
     .footer-bottom {
-      border-top: 1px solid rgba(245,240,232,0.06);
+      border-top: 1px solid rgba(0,198,251,0.1);
       padding-top: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .footer-copy {
-      font-size: 0.775rem;
-      color: rgba(245,240,232,0.3);
-    }
-    .footer-legal {
-      display: flex;
-      gap: 1.5rem;
-    }
+    .footer-copy { font-size: 0.775rem; color: var(--white-muted); }
+    .footer-legal { display: flex; gap: 1.5rem; }
     .footer-legal a {
       font-size: 0.775rem;
-      color: rgba(245,240,232,0.3);
+      color: var(--white-muted);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-legal a:hover { color: var(--cream-dim); }
+    .footer-legal a:hover { color: var(--white-dim); }
 
     /* ─── ANIMATIONS ─── */
     .fade-up {
@@ -710,23 +715,12 @@
       transform: translateY(24px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
     .fade-up:nth-child(2) { transition-delay: 0.1s; }
     .fade-up:nth-child(3) { transition-delay: 0.2s; }
     .fade-up:nth-child(4) { transition-delay: 0.3s; }
     .fade-up:nth-child(5) { transition-delay: 0.4s; }
     .fade-up:nth-child(6) { transition-delay: 0.5s; }
-
-    /* ─── DIVIDER ─── */
-    .rule {
-      width: 3rem;
-      height: 2px;
-      background: var(--amber);
-      margin: 1.5rem 0;
-    }
 
     /* ─── MOBILE ─── */
     @media (max-width: 960px) {
@@ -736,19 +730,19 @@
       .hero-left { padding: 7rem 1.5rem 3rem; }
       .hero-right { padding: 3rem 1.5rem 4rem; }
       .hero-stats-grid { max-width: 100%; }
-      section, .areas-section, .programs-section { padding: 4rem 1.5rem; }
+      section, .areas-section, .programs-section, .contact-section { padding: 4rem 1.5rem; }
       .areas-grid { grid-template-columns: 1fr; }
+      .areas-header { flex-direction: column; align-items: flex-start; }
       .programs-grid { grid-template-columns: 1fr; }
       .programs-header { grid-template-columns: 1fr; gap: 1.5rem; }
       .opos-section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
       .extra-section { grid-template-columns: 1fr; }
       .extra-block { padding: 3rem 1.5rem; }
-      .contact-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
-      .footer-grid { grid-template-columns: 1fr 1fr; padding: 0; }
+      .contact-section { gap: 3rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
       footer { padding: 3rem 1.5rem 2rem; }
       .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
       .scroll-hint { display: none; }
-      .areas-header { flex-direction: column; align-items: flex-start; }
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
@@ -757,7 +751,9 @@
 
   <!-- NAV -->
   <nav id="main-nav">
-    <a href="#" class="nav-logo">Aula<span>Magna</span></a>
+    <a href="#" class="nav-logo">
+      <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
+    </a>
     <ul class="nav-links">
       <li><a href="#areas">Formación</a></li>
       <li><a href="#programas">Programas</a></li>
@@ -770,6 +766,7 @@
   <!-- HERO -->
   <section class="hero" id="inicio">
     <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
     <div class="hero-noise"></div>
     <div class="hero-left">
       <div class="hero-eyebrow">Centro de Formación · Tarragona</div>
@@ -782,7 +779,7 @@
         Formación profesional, idiomas, oposiciones y acceso a ciclos formativos. En Tarragona, para toda la provincia.
       </p>
       <div class="hero-actions">
-        <a href="#areas" class="btn-primary">Ver cursos <span>→</span></a>
+        <a href="#areas" class="btn-primary">Ver cursos →</a>
         <a href="#contacto" class="btn-outline">Contactar</a>
       </div>
     </div>
@@ -816,22 +813,21 @@
   <div class="ticker-wrap" aria-hidden="true">
     <div class="ticker-track">
       <span class="ticker-item">Ciclos Formativos <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Oposiciones <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Inglés · Catalán · Español <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Repasos ESO & Bachillerato <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Selectividad <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Certificaciones Profesionales <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">ACTIC Informática <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Seguridad Privada <span class="ticker-dot">◆</span></span>
-      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Oposicions <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Anglès · Català · Espanyol <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Repasos ESO & Batxillerat <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Selectivitat <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Certificats Professionals <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">ACTIC Informàtica <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Seguretat Privada <span class="ticker-dot">◆</span></span>
       <span class="ticker-item">Ciclos Formativos <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Oposiciones <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Inglés · Catalán · Español <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Repasos ESO & Bachillerato <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Selectividad <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Certificaciones Profesionales <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">ACTIC Informática <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Seguridad Privada <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Oposicions <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Anglès · Català · Espanyol <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Repasos ESO & Batxillerat <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Selectivitat <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Certificats Professionals <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">ACTIC Informàtica <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Seguretat Privada <span class="ticker-dot">◆</span></span>
     </div>
   </div>
 
@@ -839,141 +835,141 @@
   <section class="areas-section" id="areas">
     <div class="areas-header">
       <div>
-        <div class="section-label">Áreas de formación</div>
-        <h2 class="section-title">Todo lo que<br><strong>necesitas aprender.</strong></h2>
+        <div class="section-label">Àrees de formació</div>
+        <h2 class="section-title">Tot el que<br><strong>necessites aprendre.</strong></h2>
       </div>
-      <p class="section-lead" style="max-width:360px">Desde el acceso a ciclos formativos hasta la preparación de oposiciones. Un centro, todas las opciones.</p>
+      <p class="section-lead" style="max-width:360px">Des de l'accés a cicles formatius fins a la preparació d'oposicions. Un centre, totes les opcions.</p>
     </div>
     <div class="areas-grid">
       <div class="area-card fade-up">
         <div class="area-icon">📚</div>
-        <div class="area-title">Repasos & Apoyo Escolar</div>
-        <div class="area-desc">Primaria, ESO, Bachillerato, Selectividad y ciclos formativos. Refuerzo personalizado para que ningún alumno se quede atrás.</div>
-        <div class="area-count">Primaria → Universidad →</div>
+        <div class="area-title">Repassos & Suport Escolar</div>
+        <div class="area-desc">Primària, ESO, Batxillerat, Selectivitat i cicles formatius. Reforç personalitzat per a tots els nivells.</div>
+        <div class="area-arrow">Primària → Universitat →</div>
       </div>
       <div class="area-card fade-up">
         <div class="area-icon">🎓</div>
-        <div class="area-title">Ciclos Formativos</div>
-        <div class="area-desc">Grado Medio y Superior: Enfermería, Emergencias, Farmacia, Educación Infantil, Dietética, Informática y más. Formación oficial homologada.</div>
-        <div class="area-count">Grado Medio & Superior →</div>
+        <div class="area-title">Cicles Formatius</div>
+        <div class="area-desc">Grau Mitjà i Superior: Infermeria, Emergències, Farmàcia, Educació Infantil, Dietètica, Informàtica i més.</div>
+        <div class="area-arrow">Grau Mitjà & Superior →</div>
       </div>
       <div class="area-card fade-up">
         <div class="area-icon">🏛️</div>
-        <div class="area-title">Oposiciones</div>
-        <div class="area-desc">Preparación intensiva para acceso a la Administración Pública: Mossos, Bombers, Guardia Urbana, Sanidad, Justicia y docencia.</div>
-        <div class="area-count">Ayuntamiento · Generalitat · Estado →</div>
+        <div class="area-title">Oposicions</div>
+        <div class="area-desc">Preparació intensiva: Mossos, Bombers, Guàrdia Urbana, Sanitat ICS, Justícia i docència.</div>
+        <div class="area-arrow">Ajuntament · Generalitat · Estat →</div>
       </div>
       <div class="area-card fade-up">
         <div class="area-icon">🌍</div>
-        <div class="area-title">Idiomas</div>
-        <div class="area-desc">Inglés, Catalán y Español para extranjeros (ELE). Preparación para exámenes oficiales DELE. Niveles básico y avanzado.</div>
-        <div class="area-count">Inglés · Catalán · ELE →</div>
+        <div class="area-title">Idiomes</div>
+        <div class="area-desc">Anglès, Català i Espanyol per a estrangers (ELE). Preparació per a exàmens oficials DELE. Tots els nivells.</div>
+        <div class="area-arrow">Anglès · Català · ELE →</div>
       </div>
       <div class="area-card fade-up">
         <div class="area-icon">💻</div>
-        <div class="area-title">Informática</div>
-        <div class="area-desc">Cursos ACTIC homologados (24h) y formación general en herramientas digitales para el trabajo y la vida cotidiana.</div>
-        <div class="area-count">ACTIC · Ofimática →</div>
+        <div class="area-title">Informàtica</div>
+        <div class="area-desc">Cursos ACTIC homologats (24h) i formació general en eines digitals per al treball i la vida quotidiana.</div>
+        <div class="area-arrow">ACTIC · Ofimàtica →</div>
       </div>
       <div class="area-card fade-up">
         <div class="area-icon">🛡️</div>
-        <div class="area-title">Seguridad</div>
-        <div class="area-desc">Formación en seguridad privada, control de accesos, especialidad en explosivos y guarda rural. Certificaciones oficiales.</div>
-        <div class="area-count">Seguridad Privada · Rural →</div>
+        <div class="area-title">Seguretat</div>
+        <div class="area-desc">Formació en seguretat privada, control d'accessos, especialitat en explosius i guarda rural. Certificacions oficials.</div>
+        <div class="area-arrow">Seguretat Privada · Rural →</div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURED PROGRAMS -->
+  <!-- PROGRAMS -->
   <section class="programs-section" id="programas">
     <div class="programs-header">
       <div>
-        <div class="section-label">Programas destacados</div>
-        <h2 class="section-title">Elige tu<br><em>camino.</em></h2>
+        <div class="section-label">Programes destacats</div>
+        <h2 class="section-title">Tria el teu<br><em>camí.</em></h2>
       </div>
-      <p class="section-lead">Programas diseñados para quien quiere resultados reales. Formación con salida profesional directa.</p>
+      <p class="section-lead">Programes dissenyats per a qui vol resultats reals. Formació amb sortida professional directa.</p>
     </div>
     <div class="programs-grid">
       <div class="program-featured fade-up">
-        <div class="program-tag">Más solicitado</div>
-        <h3 class="program-name">Ciclos Formativos de Grado Superior</h3>
-        <p class="program-desc">Accede a títulos oficiales de Técnico Superior en Educación Infantil, Animación Deportiva, Laboratorio Clínico, Dietética o Administración de Sistemas Informáticos.</p>
+        <div class="program-tag">Més sol·licitat</div>
+        <h3 class="program-name">Cicles Formatius de Grau Superior</h3>
+        <p class="program-desc">Accedeix a títols oficials de Tècnic Superior en Educació Infantil, Animació Esportiva, Laboratori Clínic, Dietètica o Administració de Sistemes Informàtics.</p>
         <div class="program-meta">
           <div class="program-meta-item">
             <span class="program-meta-val">2</span>
-            <span class="program-meta-key">Años de formación</span>
+            <span class="program-meta-key">Anys de formació</span>
           </div>
           <div class="program-meta-item">
             <span class="program-meta-val">Oficial</span>
-            <span class="program-meta-key">Título reconocido</span>
+            <span class="program-meta-key">Títol reconegut</span>
           </div>
           <div class="program-meta-item">
             <span class="program-meta-val">5+</span>
-            <span class="program-meta-key">Especialidades</span>
+            <span class="program-meta-key">Especialitats</span>
           </div>
         </div>
-        <a href="#contacto" class="btn-primary">Solicitar información →</a>
+        <a href="#contacto" class="btn-primary">Sol·licitar informació →</a>
       </div>
       <div class="program-stack">
         <div class="program-card fade-up">
-          <div class="program-tag">Preparación de examen</div>
-          <h3 class="program-name">Selectividad (PAU)</h3>
-          <p class="program-desc">Preparación intensiva para la prueba de acceso a la universidad con profesorado especializado por materias.</p>
-          <a href="#contacto" class="btn-outline" style="font-size:0.8rem; padding: 0.6rem 1.25rem;">Más info →</a>
+          <div class="program-tag">Preparació d'examen</div>
+          <h3 class="program-name">Selectivitat (PAU)</h3>
+          <p class="program-desc">Preparació intensiva amb professorat especialitzat per matèries.</p>
+          <a href="#contacto" class="btn-outline" style="font-size:0.8rem;padding:0.6rem 1.25rem">Més info →</a>
         </div>
         <div class="program-card fade-up">
-          <div class="program-tag">Certificación profesional</div>
-          <h3 class="program-name">Graduado ESO</h3>
-          <p class="program-desc">Obtén el título de educación secundaria obligatoria para adultos. Imprescindible para acceder a ciclos y empleo.</p>
-          <a href="#contacto" class="btn-outline" style="font-size:0.8rem; padding: 0.6rem 1.25rem;">Más info →</a>
+          <div class="program-tag">Certificació professional</div>
+          <h3 class="program-name">Graduat ESO</h3>
+          <p class="program-desc">Obtén el títol d'educació secundària obligatòria per a adults. Imprescindible per accedir a cicles i feina.</p>
+          <a href="#contacto" class="btn-outline" style="font-size:0.8rem;padding:0.6rem 1.25rem">Més info →</a>
         </div>
         <div class="program-card fade-up">
-          <div class="program-tag">610 horas</div>
+          <div class="program-tag">610 hores</div>
           <h3 class="program-name">Operaciones en Planta Química</h3>
-          <p class="program-desc">Certificado de profesionalidad oficial. Formación técnica completa para el sector industrial petroquímico de Tarragona.</p>
-          <a href="#contacto" class="btn-outline" style="font-size:0.8rem; padding: 0.6rem 1.25rem;">Más info →</a>
+          <p class="program-desc">Certificat de professionalitat oficial. Formació tècnica completa per al sector industrial petroquímic de Tarragona.</p>
+          <a href="#contacto" class="btn-outline" style="font-size:0.8rem;padding:0.6rem 1.25rem">Més info →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- OPOSICIONES -->
+  <!-- OPOSICIONS -->
   <div class="opos-section" id="oposiciones">
     <div>
-      <h2 class="opos-title">Prepara tu oposición<br><em>con garantías.</em></h2>
+      <h2 class="opos-title">Prepara la teva oposició<br><em>amb garanties.</em></h2>
       <p class="opos-desc">
-        Mossos d'Esquadra · Guardia Urbana · Bombers · Agents Rurals · Docència · Sanitat ICS · Justícia · Administració de l'Estat
+        Mossos d'Esquadra · Guàrdia Urbana · Bombers · Agents Rurals · Docència · Sanitat ICS · Justícia · Administració de l'Estat
       </p>
     </div>
-    <a href="#contacto" class="btn-dark">Ver oposiciones →</a>
+    <a href="#contacto" class="btn-white">Veure oposicions →</a>
   </div>
 
-  <!-- IDIOMAS + IT -->
+  <!-- IDIOMES + IT -->
   <div class="extra-section" id="idiomas">
     <div class="extra-block fade-up">
-      <div class="section-label">Idiomas</div>
-      <h2 class="section-title" style="font-size:2rem">Aprende a<br><em>comunicarte.</em></h2>
+      <div class="section-label">Idiomes</div>
+      <h2 class="section-title" style="font-size:2rem">Aprèn a<br><em>comunicar-te.</em></h2>
       <div class="rule"></div>
-      <p class="section-lead" style="font-size:0.9rem">Cursos de inglés, catalán y español para extranjeros (ELE) con preparación para certificados oficiales DELE. Todos los niveles.</p>
+      <p class="section-lead" style="font-size:0.9rem">Cursos d'anglès, català i espanyol per a estrangers (ELE) amb preparació per a certificats oficials DELE. Tots els nivells.</p>
       <div class="lang-tags">
-        <span class="lang-tag">Inglés A1-C1</span>
+        <span class="lang-tag">Anglès A1-C1</span>
         <span class="lang-tag">Català B1-C1</span>
-        <span class="lang-tag">Español ELE Básico</span>
-        <span class="lang-tag">Español ELE Avanzado</span>
-        <span class="lang-tag">ELE Integración (45h)</span>
+        <span class="lang-tag">Espanyol ELE Bàsic</span>
+        <span class="lang-tag">Espanyol ELE Avançat</span>
+        <span class="lang-tag">ELE Integració (45h)</span>
         <span class="lang-tag">DELE Examen</span>
       </div>
     </div>
     <div class="extra-block fade-up">
-      <div class="section-label">Informática</div>
-      <h2 class="section-title" style="font-size:2rem">Domina la<br><em>tecnología.</em></h2>
+      <div class="section-label">Informàtica</div>
+      <h2 class="section-title" style="font-size:2rem">Domina la<br><em>tecnologia.</em></h2>
       <div class="rule"></div>
-      <p class="section-lead" style="font-size:0.9rem">Cursos ACTIC homologados por la Generalitat de Catalunya (24 horas) y formación en ofimática para el trabajo y la vida diaria.</p>
+      <p class="section-lead" style="font-size:0.9rem">Cursos ACTIC homologats per la Generalitat de Catalunya (24 hores) i formació en ofimàtica per al treball i la vida diària.</p>
       <div class="lang-tags">
-        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">ACTIC Bàsic</span>
-        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">ACTIC Mitjà</span>
-        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">Ofimàtica</span>
-        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">Informàtica General</span>
+        <span class="lang-tag lang-tag-alt">ACTIC Bàsic</span>
+        <span class="lang-tag lang-tag-alt">ACTIC Mitjà</span>
+        <span class="lang-tag lang-tag-alt">Ofimàtica</span>
+        <span class="lang-tag lang-tag-alt">Informàtica General</span>
       </div>
     </div>
   </div>
@@ -981,15 +977,15 @@
   <!-- CONTACT -->
   <section class="contact-section" id="contacto">
     <div>
-      <div class="section-label">Contacto</div>
-      <h2 class="section-title">Hablemos<br><strong>sin compromiso.</strong></h2>
+      <div class="section-label">Contacte</div>
+      <h2 class="section-title">Parlem<br><strong>sense compromís.</strong></h2>
       <div class="rule"></div>
-      <p class="section-lead" style="font-size:0.9rem; margin-bottom: 2.5rem">¿Tienes dudas sobre qué curso elegir? Nuestro equipo te orienta sin compromiso. Ven a visitarnos o contáctanos.</p>
+      <p class="section-lead" style="font-size:0.9rem;margin-bottom:2.5rem">Tens dubtes sobre quin curs triar? El nostre equip t'orienta sense compromís. Vine a visitar-nos o contacta'ns.</p>
       <div class="contact-info">
         <div class="contact-item">
           <div class="contact-icon">📞</div>
           <div>
-            <div class="contact-key">Teléfono</div>
+            <div class="contact-key">Telèfon</div>
             <div class="contact-val">977 22 22 77</div>
           </div>
         </div>
@@ -1003,7 +999,7 @@
         <div class="contact-item">
           <div class="contact-icon">📍</div>
           <div>
-            <div class="contact-key">Dirección</div>
+            <div class="contact-key">Adreça</div>
             <div class="contact-val">Tarragona, España</div>
           </div>
         </div>
@@ -1012,11 +1008,11 @@
     <form class="contact-form" onsubmit="return false">
       <div class="form-row">
         <div class="form-field">
-          <label class="form-label">Nombre</label>
-          <input type="text" class="form-input" placeholder="Tu nombre">
+          <label class="form-label">Nom</label>
+          <input type="text" class="form-input" placeholder="El teu nom">
         </div>
         <div class="form-field">
-          <label class="form-label">Teléfono</label>
+          <label class="form-label">Telèfon</label>
           <input type="tel" class="form-input" placeholder="000 000 000">
         </div>
       </div>
@@ -1025,23 +1021,23 @@
         <input type="email" class="form-input" placeholder="tu@email.com">
       </div>
       <div class="form-field">
-        <label class="form-label">Área de interés</label>
+        <label class="form-label">Àrea d'interès</label>
         <select class="form-select">
-          <option value="">Selecciona una opción…</option>
-          <option>Ciclos Formativos</option>
-          <option>Oposiciones</option>
-          <option>Repasos & Apoyo Escolar</option>
-          <option>Selectividad / PAU</option>
-          <option>Idiomas</option>
-          <option>Informática / ACTIC</option>
-          <option>Seguridad Privada</option>
-          <option>Certificados Profesionales</option>
-          <option>Otro</option>
+          <option value="">Selecciona una opció…</option>
+          <option>Cicles Formatius</option>
+          <option>Oposicions</option>
+          <option>Repassos & Suport Escolar</option>
+          <option>Selectivitat / PAU</option>
+          <option>Idiomes</option>
+          <option>Informàtica / ACTIC</option>
+          <option>Seguretat Privada</option>
+          <option>Certificats Professionals</option>
+          <option>Altre</option>
         </select>
       </div>
       <div class="form-field">
-        <label class="form-label">Mensaje (opcional)</label>
-        <textarea class="form-textarea" placeholder="Cuéntanos qué necesitas…"></textarea>
+        <label class="form-label">Missatge (opcional)</label>
+        <textarea class="form-textarea" placeholder="Explica'ns què necessites…"></textarea>
       </div>
       <button type="submit" class="btn-primary" style="margin-top:0.5rem">Enviar consulta →</button>
     </form>
@@ -1050,96 +1046,90 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#" class="nav-logo">Aula<span style="color:var(--amber)">Magna</span></a>
-        <p class="footer-tagline">Centro de formación en Tarragona desde 1990. Formación académica, profesional e idiomas para todas las edades.</p>
+      <div>
+        <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna" class="footer-logo">
+        <p class="footer-tagline">Centre de formació a Tarragona des de 1990. Formació acadèmica, professional i idiomes per a totes les edats.</p>
       </div>
       <div>
-        <div class="footer-col-title">Formación</div>
+        <div class="footer-col-title">Formació</div>
         <ul class="footer-links">
-          <li><a href="#">Ciclos Formativos</a></li>
-          <li><a href="#">Repasos Escolares</a></li>
-          <li><a href="#">Selectividad</a></li>
-          <li><a href="#">Graduado ESO</a></li>
-          <li><a href="#">Certificaciones</a></li>
+          <li><a href="#">Cicles Formatius</a></li>
+          <li><a href="#">Repassos Escolars</a></li>
+          <li><a href="#">Selectivitat</a></li>
+          <li><a href="#">Graduat ESO</a></li>
+          <li><a href="#">Certificacions</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Oposiciones</div>
+        <div class="footer-col-title">Oposicions</div>
         <ul class="footer-links">
           <li><a href="#">Mossos d'Esquadra</a></li>
-          <li><a href="#">Guardia Urbana</a></li>
+          <li><a href="#">Guàrdia Urbana</a></li>
           <li><a href="#">Bombers</a></li>
           <li><a href="#">Docència</a></li>
           <li><a href="#">Sanitat ICS</a></li>
         </ul>
       </div>
       <div>
-        <div class="footer-col-title">Contacto</div>
+        <div class="footer-col-title">Contacte</div>
         <ul class="footer-links">
           <li><a href="tel:977222277">977 22 22 77</a></li>
           <li><a href="mailto:aulamagna@aulamagna.es">aulamagna@aulamagna.es</a></li>
-          <li><a href="#">Cómo llegar</a></li>
-          <li><a href="#">Horarios</a></li>
+          <li><a href="#">Com arribar</a></li>
+          <li><a href="#">Horaris</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2025 Aula Magna · Tarragona</span>
       <div class="footer-legal">
-        <a href="#">Aviso legal</a>
-        <a href="#">Privacidad</a>
+        <a href="#">Avís legal</a>
+        <a href="#">Privacitat</a>
         <a href="#">Cookies</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // ── Nav scroll ──
+    // Nav scroll
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // ── Intersection observer for fade-up ──
-    const fadeEls = document.querySelectorAll('.fade-up');
+    // Fade-up on scroll
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
-    fadeEls.forEach(el => io.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
-    // ── Counter animation ──
+    // Counter animation
     function animateCount(el) {
       const target = parseInt(el.dataset.count);
-      const duration = 1800;
       const start = performance.now();
+      const duration = 1800;
       const step = (now) => {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 3);
-        const current = Math.round(ease * target);
-        el.textContent = current.toLocaleString('es');
-        if (progress < 1) requestAnimationFrame(step);
+        const p = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(ease * target).toLocaleString('ca');
+        if (p < 1) requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
     }
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { animateCount(e.target); statsObserver.unobserve(e.target); }
-      });
+    const statsObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); statsObs.unobserve(e.target); } });
     }, { threshold: 0.5 });
-    statNumbers.forEach(n => statsObserver.observe(n));
+    document.querySelectorAll('.stat-number').forEach(n => statsObs.observe(n));
 
-    // ── Smooth staggered hero animation on load ──
+    // Hero entrance
     document.addEventListener('DOMContentLoaded', () => {
-      const heroEl = document.querySelector('.hero-left');
-      heroEl.style.opacity = '0';
-      heroEl.style.transform = 'translateY(20px)';
+      const h = document.querySelector('.hero-left');
+      h.style.opacity = '0';
+      h.style.transform = 'translateY(20px)';
       setTimeout(() => {
-        heroEl.style.transition = 'opacity 1s ease, transform 1s ease';
-        heroEl.style.opacity = '1';
-        heroEl.style.transform = 'translateY(0)';
+        h.style.transition = 'opacity 1s ease, transform 1s ease';
+        h.style.opacity = '1';
+        h.style.transform = 'none';
       }, 100);
     });
   </script>
