@@ -1,1029 +1,872 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ca">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula Magna | Centro de Formación · Tarragona</title>
+  <title>Aula Magna | Centre de Formació · Tarragona</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ─── RESET & VARS ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      /* ── Brand palette ── */
-      --navy:       #0F284D;
-      --navy-deep:  #021638;
-      --navy-mid:   #182943;
-      --cyan:       #00c6fb;
-      --cyan-dim:   #34dee8;
-      --cyan-pale:  #93e9f6;
-      --blue:       #0080FE;
-      --orange:     #de6906;
-      --orange-bright: #f07920;
-      --white:      #ffffff;
-      --white-dim:  rgba(255,255,255,0.72);
-      --white-muted:rgba(255,255,255,0.38);
-      --grad: linear-gradient(45deg, #00c6fb 0%, #0F284D 100%);
-      --grad-r: linear-gradient(45deg, #0F284D 0%, #00c6fb 100%);
-      --font-display: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'DM Sans', system-ui, sans-serif;
-    }
+  :root {
+    --navy:    #0F284D;
+    --navy-d:  #021638;
+    --cyan:    #00c6fb;
+    --cyan-d:  #009bc5;
+    --blue:    #0080FE;
+    --orange:  #de6906;
+    --white:   #ffffff;
+    --off:     #F4F6F8;
+    --ink:     #0D1821;
+    --mid:     #4A5568;
+    --fs: 'Syne', sans-serif;
+    --fi: 'Instrument Serif', Georgia, serif;
+    --fd: 'DM Sans', system-ui, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
 
-    html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: var(--fd); color: var(--ink); overflow-x: hidden; background: var(--white); }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
 
-    body {
-      background: var(--navy-deep);
-      color: var(--white);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    padding: 0 3rem;
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.3s var(--ease), box-shadow 0.3s;
+  }
+  .nav.solid {
+    background: rgba(2,22,56,0.97);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 rgba(0,198,251,0.15);
+  }
+  .nav-logo img { height: 42px; width: auto; }
+  .nav-menu { display: flex; gap: 0; list-style: none; }
+  .nav-menu a {
+    display: block; padding: 0 1.25rem;
+    font-family: var(--fs); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    line-height: 72px;
+    transition: color 0.2s;
+  }
+  .nav-menu a:hover { color: var(--cyan); }
+  .nav-btn {
+    background: var(--cyan); color: var(--navy-d) !important;
+    padding: 0.55rem 1.4rem !important;
+    line-height: normal !important;
+    font-weight: 700 !important;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s !important;
+    align-self: center;
+  }
+  .nav-btn:hover { background: var(--orange) !important; color: #fff !important; transform: translateY(-1px); }
+  .nav-ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .nav-ham span { width: 24px; height: 2px; background: #fff; transition: 0.3s; }
 
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 0.9rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
-    }
-    nav.scrolled {
-      background: rgba(2,22,56,0.94);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 1px 0 rgba(0,198,251,0.15);
-    }
-    .nav-logo img {
-      height: 48px;
-      width: auto;
-      display: block;
-      filter: brightness(1.1);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--white-dim);
-      text-decoration: none;
-      font-size: 0.825rem;
-      font-weight: 500;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--cyan); }
-    .nav-cta {
-      background: var(--blue) !important;
-      color: var(--white) !important;
-      padding: 0.5rem 1.25rem;
-      border-radius: 3px;
-      font-weight: 700 !important;
-      transition: background 0.2s !important, transform 0.2s !important;
-    }
-    .nav-cta:hover { background: var(--orange) !important; transform: translateY(-1px); }
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--navy-d) 0%, var(--navy) 50%, #0a3a6b 100%);
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.035;
+    background-image: radial-gradient(var(--cyan) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,198,251,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 9rem 5rem 5rem 5rem;
+    position: relative; z-index: 1;
+  }
+  .hero-tag {
+    font-family: var(--fs); font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-tag::before { content: ''; width: 2.5rem; height: 1px; background: var(--cyan); }
+  .hero-h1 {
+    font-family: var(--fi); font-size: clamp(3.5rem, 5.5vw, 6rem);
+    font-weight: 400; line-height: 1.02; color: var(--white);
+    margin-bottom: 2rem;
+  }
+  .hero-h1 em { font-style: italic; color: var(--cyan); }
+  .hero-sub {
+    font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.65);
+    max-width: 380px; line-height: 1.75; margin-bottom: 2.5rem;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--fs); font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.95rem 2.2rem; border-radius: 2px; cursor: pointer; border: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: background 0.2s var(--ease), color 0.2s, transform 0.15s;
+  }
+  .btn-cyan { background: var(--cyan); color: var(--navy-d); }
+  .btn-cyan:hover { background: #fff; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-navy { background: var(--navy-d); color: var(--cyan); }
+  .btn-navy:hover { background: var(--navy); }
 
-    /* ─── HERO ─── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: var(--grad);
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 100% 50%, rgba(0,198,251,0.18) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 60% at 0% 80%, rgba(2,22,56,0.8) 0%, transparent 70%);
-    }
-    .hero-noise {
-      position: absolute;
-      inset: 0;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-size: 200px;
-    }
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 4rem 5rem 5rem;
-      position: relative;
-      z-index: 1;
-    }
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      width: 2rem;
-      height: 1px;
-      background: var(--cyan);
-    }
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--white);
-      margin-bottom: 0.25rem;
-    }
-    .hero-title strong {
-      font-weight: 700;
-      display: block;
-      background: linear-gradient(90deg, #ffffff 0%, #93e9f6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-title em {
-      font-style: italic;
-      color: var(--cyan-pale);
-      font-size: 0.65em;
-    }
-    .hero-subtitle {
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--white-dim);
-      max-width: 420px;
-      margin: 1.75rem 0 2.5rem;
-      line-height: 1.75;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      background: var(--blue);
-      color: var(--white);
-      padding: 0.9rem 2rem;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      border-radius: 3px;
-      transition: background 0.2s, transform 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .btn-primary:hover { background: var(--orange); transform: translateY(-1px); }
-    .btn-outline {
-      background: transparent;
-      color: var(--white);
-      padding: 0.9rem 2rem;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 3px;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,198,251,0.06); }
+  .hero-image {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 9rem 5rem 5rem 2rem;
+  }
+  .hero-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .hero-card {
+    position: relative; overflow: hidden; border-radius: 6px;
+    aspect-ratio: 3/2;
+    border: 1px solid rgba(0,198,251,0.15);
+  }
+  .hero-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s var(--ease);
+    filter: brightness(0.75) saturate(0.9);
+  }
+  .hero-card:hover img { transform: scale(1.06); }
+  .hero-card-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(to top, rgba(2,22,56,0.9), transparent);
+    font-family: var(--fs); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
+  }
+  .hero-card.tall { grid-row: span 2; aspect-ratio: auto; }
 
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 5rem 5rem 2rem;
-    }
-    .hero-stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(0,198,251,0.2);
-      border: 1px solid rgba(0,198,251,0.2);
-      width: 100%;
-      max-width: 400px;
-    }
-    .stat-block {
-      background: rgba(2,22,56,0.6);
-      backdrop-filter: blur(8px);
-      padding: 2.5rem 2rem;
-      transition: background 0.3s;
-    }
-    .stat-block:hover { background: rgba(15,40,77,0.8); }
-    .stat-number {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--cyan);
-      margin-bottom: 0.5rem;
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-    }
+  /* ─── MARQUEE ─── */
+  .marquee-wrap {
+    background: var(--cyan); overflow: hidden;
+    padding: 0.8rem 0; white-space: nowrap;
+  }
+  .marquee-track { display: inline-flex; animation: marquee 25s linear infinite; }
+  .marquee-track:hover { animation-play-state: paused; }
+  .marquee-item {
+    font-family: var(--fs); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--navy-d); padding: 0 2.5rem;
+  }
+  .marquee-sep { color: rgba(2,22,56,0.4); }
+  @keyframes marquee { to { transform: translateX(-50%); } }
 
-    /* ─── SCROLL HINT ─── */
-    .scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      z-index: 2;
-    }
-    .scroll-line {
-      width: 1px;
-      height: 3rem;
-      background: linear-gradient(to bottom, var(--cyan), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
-    .scroll-text {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--white-muted);
-      writing-mode: vertical-rl;
-    }
+  /* ─── NUMBERS BAND ─── */
+  .numbers {
+    background: var(--off);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid #e2e8f0;
+  }
+  .num-block {
+    padding: 3.5rem 3rem;
+    border-right: 1px solid #e2e8f0;
+    transition: background 0.2s;
+  }
+  .num-block:last-child { border-right: none; }
+  .num-block:hover { background: var(--white); }
+  .num-val {
+    font-family: var(--fi); font-size: 3.8rem;
+    font-weight: 400; line-height: 1;
+    color: var(--navy); margin-bottom: 0.5rem;
+  }
+  .num-val span { font-family: var(--fs); font-size: 2rem; color: var(--cyan); }
+  .num-label {
+    font-family: var(--fs); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid);
+  }
 
-    /* ─── TICKER ─── */
-    .ticker-wrap {
-      background: var(--navy);
-      border-top: 1px solid rgba(0,198,251,0.25);
-      border-bottom: 1px solid rgba(0,198,251,0.25);
-      padding: 0.65rem 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .ticker-track {
-      display: inline-flex;
-      animation: ticker 30s linear infinite;
-    }
-    .ticker-item {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--cyan-pale);
-      padding: 0 2.5rem;
-    }
-    .ticker-dot { color: var(--cyan); }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
+  /* ─── SECTION SHARED ─── */
+  .section-eyebrow {
+    font-family: var(--fs); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cyan-d); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--cyan-d); }
+  .section-h2 {
+    font-family: var(--fi); font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400; line-height: 1.1; color: var(--navy);
+    margin-bottom: 1.25rem;
+  }
+  .section-h2 em { font-style: italic; color: var(--cyan-d); }
+  .section-h2-inv { color: var(--white); }
+  .section-h2-inv em { color: var(--cyan); }
+  .section-p { font-size: 1rem; color: var(--mid); line-height: 1.8; max-width: 520px; }
+  .section-p-inv { color: rgba(255,255,255,0.65); }
 
-    /* ─── SECTION BASE ─── */
-    section { padding: 6rem 5rem; }
-    .section-label {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .section-label::before {
-      content: '';
-      width: 1.5rem;
-      height: 1px;
-      background: var(--cyan);
-    }
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.2rem, 4vw, 3.5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 1.5rem;
-    }
-    .section-title strong { font-weight: 700; }
-    .section-title em { font-style: italic; color: var(--cyan); }
-    .section-lead {
-      font-size: 1rem;
-      color: var(--white-dim);
-      max-width: 560px;
-      line-height: 1.8;
-    }
+  /* ─── AREAS GRID ─── */
+  .areas { padding: 6rem 5rem; background: var(--white); }
+  .areas-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; gap: 2rem; }
+  .areas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0; border: 1px solid #e2e8f0;
+  }
+  .area {
+    padding: 2.75rem 2.5rem;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    position: relative; overflow: hidden;
+    transition: background 0.25s var(--ease);
+    cursor: pointer;
+  }
+  .area:nth-child(3n) { border-right: none; }
+  .area:nth-child(4), .area:nth-child(5), .area:nth-child(6) { border-bottom: none; }
+  .area::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 3px; background: var(--cyan);
+    transition: width 0.35s var(--ease);
+  }
+  .area:hover::after { width: 100%; }
+  .area:hover { background: var(--off); }
+  .area-icon { font-size: 1.6rem; margin-bottom: 1.25rem; }
+  .area-n {
+    position: absolute; top: 2rem; right: 2rem;
+    font-family: var(--fi); font-size: 1.5rem; color: #e2e8f0;
+    transition: color 0.3s;
+  }
+  .area:hover .area-n { color: var(--cyan); opacity: 0.3; }
+  .area-title {
+    font-family: var(--fs); font-size: 1.05rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3;
+  }
+  .area-desc { font-size: 0.875rem; color: var(--mid); line-height: 1.7; }
+  .area-link {
+    margin-top: 1.25rem; font-family: var(--fs); font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cyan-d);
+    display: flex; align-items: center; gap: 0.4rem;
+    opacity: 0; transform: translateX(-6px);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .area:hover .area-link { opacity: 1; transform: none; }
 
-    /* ─── AREAS ─── */
-    .areas-section {
-      background: var(--navy);
-      padding: 6rem 5rem;
-    }
-    .areas-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 4rem;
-      gap: 2rem;
-    }
-    .areas-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(0,198,251,0.08);
-    }
-    .area-card {
-      background: var(--navy);
-      padding: 2.75rem 2.5rem;
-      border-top: 3px solid transparent;
-      transition: border-color 0.3s, background 0.3s, transform 0.3s;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-    .area-card::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 0;
-      background: linear-gradient(to top, rgba(0,198,251,0.06), transparent);
-      transition: height 0.4s;
-    }
-    .area-card:hover::before { height: 100%; }
-    .area-card:hover {
-      border-color: var(--cyan);
-      background: var(--navy-mid);
-      transform: translateY(-2px);
-    }
-    .area-icon {
-      width: 2.5rem;
-      height: 2.5rem;
-      background: rgba(0,198,251,0.1);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      transition: background 0.3s;
-    }
-    .area-card:hover .area-icon { background: rgba(0,198,251,0.22); }
-    .area-title {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      line-height: 1.2;
-    }
-    .area-desc {
-      font-size: 0.875rem;
-      color: var(--white-dim);
-      line-height: 1.7;
-    }
-    .area-arrow {
-      margin-top: 1.5rem;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      opacity: 0;
-      transform: translateY(4px);
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .area-card:hover .area-arrow { opacity: 1; transform: translateY(0); }
+  /* ─── SPLIT IMAGE SECTIONS ─── */
+  .split { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+  .split.rev { direction: rtl; }
+  .split.rev > * { direction: ltr; }
+  .split-img { position: relative; overflow: hidden; }
+  .split-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.8s var(--ease);
+    filter: brightness(0.88);
+  }
+  .split:hover .split-img img { transform: scale(1.04); }
+  .split-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(2,22,56,0.4) 0%, transparent 60%);
+  }
+  .split-body {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem;
+  }
+  .split-body-navy { background: var(--navy); }
+  .split-body-white { background: var(--white); }
+  .split-body-off { background: var(--off); }
+  .split-tag {
+    display: inline-flex; align-items: center;
+    font-family: var(--fs); font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    background: rgba(0,198,251,0.12); color: var(--cyan-d);
+    padding: 0.35rem 0.85rem; border-radius: 2px; margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+  .split-tag-inv { background: rgba(0,198,251,0.15); color: var(--cyan); }
+  .split-items { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .split-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.9rem; color: var(--mid);
+  }
+  .split-item::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--cyan-d); flex-shrink: 0;
+  }
+  .split-item-inv { color: rgba(255,255,255,0.65); }
+  .split-item-inv::before { background: var(--cyan); }
 
-    /* ─── PROGRAMS ─── */
-    .programs-section { padding: 6rem 5rem; background: var(--navy-deep); }
-    .programs-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: end;
-      margin-bottom: 4rem;
-    }
-    .programs-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 1.5rem;
-    }
-    .program-featured {
-      background: var(--navy);
-      border: 1px solid rgba(0,198,251,0.12);
-      padding: 3rem;
-      position: relative;
-      overflow: hidden;
-      border-radius: 4px;
-    }
-    .program-featured::after {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 160px; height: 160px;
-      background: radial-gradient(circle, rgba(0,198,251,0.12), transparent 70%);
-      pointer-events: none;
-    }
-    .program-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      background: rgba(0,198,251,0.1);
-      padding: 0.3rem 0.75rem;
-      border-radius: 2px;
-      display: inline-block;
-      margin-bottom: 1.25rem;
-    }
-    .program-name {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--white);
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-    .program-desc {
-      font-size: 0.9rem;
-      color: var(--white-dim);
-      line-height: 1.75;
-      margin-bottom: 2rem;
-    }
-    .program-meta {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .program-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
-    .program-meta-val {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--cyan);
-    }
-    .program-meta-key {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-muted);
-    }
-    .program-stack { display: flex; flex-direction: column; gap: 1.5rem; }
-    .program-card {
-      background: var(--navy);
-      border: 1px solid rgba(0,198,251,0.1);
-      padding: 1.75rem 2rem;
-      border-radius: 4px;
-      transition: border-color 0.3s, background 0.3s;
-      cursor: pointer;
-      flex: 1;
-    }
-    .program-card:hover { border-color: rgba(0,198,251,0.45); background: var(--navy-mid); }
-    .program-card .program-name { font-size: 1.2rem; margin-bottom: 0.5rem; }
-    .program-card .program-desc { font-size: 0.825rem; margin-bottom: 1.25rem; }
+  /* ─── COURSES MOSAIC ─── */
+  .courses { padding: 6rem 5rem; background: var(--off); }
+  .courses-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; gap: 2rem; }
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 240px 240px;
+    gap: 12px;
+  }
+  .course-card {
+    position: relative; overflow: hidden; border-radius: 4px;
+    cursor: pointer;
+  }
+  .course-card:first-child { grid-column: span 2; grid-row: span 2; }
+  .course-card:nth-child(4) { grid-column: span 2; }
+  .course-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s var(--ease), filter 0.4s;
+    filter: brightness(0.72) saturate(0.9);
+  }
+  .course-card:hover img { transform: scale(1.07); filter: brightness(0.55) saturate(1.1); }
+  .course-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(to top, rgba(2,22,56,0.92) 0%, transparent 100%);
+    transform: translateY(8px); opacity: 0.85;
+    transition: transform 0.35s var(--ease), opacity 0.35s;
+  }
+  .course-card:hover .course-info { transform: none; opacity: 1; }
+  .course-cat {
+    font-family: var(--fs); font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 0.3rem;
+  }
+  .course-name {
+    font-family: var(--fi); font-size: 1.05rem; color: #fff; line-height: 1.25;
+  }
+  .course-card:first-child .course-name { font-size: 1.4rem; }
 
-    /* ─── OPOSICIONES BAR ─── */
-    .opos-section {
-      background: var(--grad);
-      padding: 4rem 5rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 3rem;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .opos-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-size: 200px;
-      opacity: 0.04;
-    }
-    .opos-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.1;
-      position: relative;
-    }
-    .opos-title em { font-style: italic; font-weight: 300; }
-    .opos-desc {
-      color: rgba(255,255,255,0.75);
-      font-size: 0.9rem;
-      margin-top: 0.75rem;
-      max-width: 600px;
-      position: relative;
-    }
-    .btn-white {
-      background: var(--white);
-      color: var(--navy-deep);
-      padding: 1rem 2rem;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-decoration: none;
-      white-space: nowrap;
-      border-radius: 3px;
-      position: relative;
-      transition: background 0.2s, color 0.2s;
-    }
-    .btn-white:hover { background: var(--cyan-pale); }
+  /* ─── OPOSICIONS BAND ─── */
+  .opos {
+    background: var(--navy);
+    padding: 5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .opos::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,198,251,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .opos-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .pill {
+    font-family: var(--fs); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.45rem 1rem; border-radius: 2px;
+    border: 1px solid rgba(0,198,251,0.25);
+    color: rgba(255,255,255,0.7);
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .pill:hover { background: rgba(0,198,251,0.1); border-color: var(--cyan); color: #fff; }
 
-    /* ─── IDIOMAS + IT ─── */
-    .extra-section { display: grid; grid-template-columns: 1fr 1fr; }
-    .extra-block {
-      padding: 5rem;
-      position: relative;
-    }
-    .extra-block:first-child { background: var(--navy-mid); }
-    .extra-block:last-child { background: var(--navy); }
-    .lang-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 2rem;
-    }
-    .lang-tag {
-      background: rgba(0,198,251,0.08);
-      border: 1px solid rgba(0,198,251,0.25);
-      color: var(--cyan-pale);
-      padding: 0.4rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      border-radius: 2px;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .lang-tag:hover { background: rgba(0,198,251,0.18); border-color: var(--cyan); }
-    .lang-tag-alt {
-      background: rgba(0,128,254,0.08);
-      border: 1px solid rgba(0,128,254,0.3);
-      color: #93bfff;
-    }
-    .lang-tag-alt:hover { background: rgba(0,128,254,0.18); border-color: var(--blue); }
+  /* ─── CONTACT ─── */
+  .contact { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+  .contact-map {
+    background: var(--navy);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem;
+    position: relative; overflow: hidden;
+  }
+  .contact-map::before {
+    content: '';
+    position: absolute; inset: 0; opacity: 0.05;
+    background-image: radial-gradient(var(--cyan) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 2rem; margin-top: 2.5rem; position: relative; }
+  .cdet { display: flex; gap: 1rem; align-items: flex-start; }
+  .cdet-icon {
+    width: 2.5rem; height: 2.5rem; flex-shrink: 0;
+    background: rgba(0,198,251,0.1); border: 1px solid rgba(0,198,251,0.2);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+  }
+  .cdet-k { font-family: var(--fs); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.2rem; }
+  .cdet-v { font-size: 1rem; color: #fff; font-weight: 500; }
 
-    /* ─── RULE ─── */
-    .rule {
-      width: 3rem;
-      height: 2px;
-      background: var(--cyan);
-      margin: 1.5rem 0;
-    }
+  .contact-form-wrap {
+    background: var(--white);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem;
+  }
+  .cf { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .cf-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .cf-label { font-family: var(--fs); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+  .cf-input, .cf-select, .cf-ta {
+    border: 1px solid #e2e8f0; background: var(--off);
+    color: var(--ink); padding: 0.85rem 1rem;
+    font-family: var(--fd); font-size: 0.9rem;
+    border-radius: 3px; outline: none; width: 100%;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .cf-input:focus, .cf-select:focus, .cf-ta:focus { border-color: var(--cyan-d); background: var(--white); }
+  .cf-ta { resize: vertical; min-height: 90px; }
+  .cf-select option { background: var(--white); }
 
-    /* ─── CONTACT ─── */
-    .contact-section {
-      background: var(--navy-deep);
-      padding: 6rem 5rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-    }
-    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
-    .contact-item { display: flex; gap: 1.25rem; align-items: flex-start; }
-    .contact-icon {
-      width: 2.5rem;
-      height: 2.5rem;
-      background: rgba(0,198,251,0.1);
-      border: 1px solid rgba(0,198,251,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 1rem;
-      border-radius: 3px;
-    }
-    .contact-key {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-muted);
-      margin-bottom: 0.2rem;
-    }
-    .contact-val { font-size: 1.1rem; color: var(--white); font-weight: 500; }
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-    }
-    .form-input, .form-select, .form-textarea {
-      background: var(--navy);
-      border: 1px solid rgba(0,198,251,0.15);
-      color: var(--white);
-      padding: 0.85rem 1rem;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      transition: border-color 0.2s;
-      outline: none;
-      width: 100%;
-      border-radius: 3px;
-    }
-    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.28); }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--cyan); }
-    .form-select option { background: var(--navy); }
-    .form-textarea { resize: vertical; min-height: 100px; }
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy-d);
+    border-top: 1px solid rgba(0,198,251,0.1);
+    padding: 4rem 5rem 2rem;
+  }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-logo img { height: 40px; margin-bottom: 1rem; }
+  .footer-tagline { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; }
+  .ft-col-h { font-family: var(--fs); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.25rem; }
+  .ft-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .ft-links a { font-size: 0.875rem; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+  .ft-links a:hover { color: var(--cyan); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .fc { font-size: 0.775rem; color: rgba(255,255,255,0.25); }
+  .fl { display: flex; gap: 1.5rem; }
+  .fl a { font-size: 0.775rem; color: rgba(255,255,255,0.25); transition: color 0.2s; }
+  .fl a:hover { color: rgba(255,255,255,0.5); }
 
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--navy-deep);
-      border-top: 1px solid rgba(0,198,251,0.12);
-      padding: 3rem 5rem 2rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 3rem;
-    }
-    .footer-logo { height: 44px; width: auto; margin-bottom: 1rem; display: block; }
-    .footer-tagline {
-      font-size: 0.85rem;
-      color: var(--white-dim);
-      line-height: 1.7;
-      max-width: 280px;
-    }
-    .footer-col-title {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1.25rem;
-    }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-    .footer-links a {
-      font-size: 0.875rem;
-      color: var(--white-dim);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--cyan); }
-    .footer-bottom {
-      border-top: 1px solid rgba(0,198,251,0.1);
-      padding-top: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-copy { font-size: 0.775rem; color: var(--white-muted); }
-    .footer-legal { display: flex; gap: 1.5rem; }
-    .footer-legal a {
-      font-size: 0.775rem;
-      color: var(--white-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-legal a:hover { color: var(--white-dim); }
+  /* ─── ANIMATIONS ─── */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+  }
+  [data-reveal].on { opacity: 1; transform: none; }
+  [data-reveal][data-d="1"] { transition-delay: 0.1s; }
+  [data-reveal][data-d="2"] { transition-delay: 0.2s; }
+  [data-reveal][data-d="3"] { transition-delay: 0.3s; }
+  [data-reveal][data-d="4"] { transition-delay: 0.4s; }
+  [data-reveal][data-d="5"] { transition-delay: 0.5s; }
+  [data-reveal][data-d="6"] { transition-delay: 0.6s; }
 
-    /* ─── ANIMATIONS ─── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-up:nth-child(2) { transition-delay: 0.1s; }
-    .fade-up:nth-child(3) { transition-delay: 0.2s; }
-    .fade-up:nth-child(4) { transition-delay: 0.3s; }
-    .fade-up:nth-child(5) { transition-delay: 0.4s; }
-    .fade-up:nth-child(6) { transition-delay: 0.5s; }
+  /* ─── SCROLL DOWN ─── */
+  .scroll-down {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 2;
+  }
+  .scroll-down span { font-family: var(--fs); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .scroll-arrow {
+    width: 1px; height: 3rem;
+    background: linear-gradient(to bottom, rgba(0,198,251,0.7), transparent);
+    animation: arrowPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes arrowPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
 
-    /* ─── MOBILE ─── */
-    @media (max-width: 960px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 7rem 1.5rem 3rem; }
-      .hero-right { padding: 3rem 1.5rem 4rem; }
-      .hero-stats-grid { max-width: 100%; }
-      section, .areas-section, .programs-section, .contact-section { padding: 4rem 1.5rem; }
-      .areas-grid { grid-template-columns: 1fr; }
-      .areas-header { flex-direction: column; align-items: flex-start; }
-      .programs-grid { grid-template-columns: 1fr; }
-      .programs-header { grid-template-columns: 1fr; gap: 1.5rem; }
-      .opos-section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
-      .extra-section { grid-template-columns: 1fr; }
-      .extra-block { padding: 3rem 1.5rem; }
-      .contact-section { gap: 3rem; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      footer { padding: 3rem 1.5rem 2rem; }
-      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
-      .scroll-hint { display: none; }
-      .form-row { grid-template-columns: 1fr; }
-    }
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-image { display: none; }
+    .hero-text { padding: 8rem 2rem 5rem; }
+    .nav { padding: 0 1.5rem; }
+    .nav-menu { display: none; }
+    .nav-ham { display: flex; }
+    .numbers { grid-template-columns: 1fr 1fr; }
+    .num-block:nth-child(2) { border-right: none; }
+    .num-block:nth-child(3) { border-top: 1px solid #e2e8f0; }
+    .areas, .courses { padding: 4rem 1.5rem; }
+    .areas-grid { grid-template-columns: 1fr; }
+    .area:nth-child(3n) { border-right: 1px solid #e2e8f0; }
+    .area:nth-child(n) { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .split { grid-template-columns: 1fr; }
+    .split.rev { direction: ltr; }
+    .split-img { min-height: 300px; }
+    .split-body { padding: 3rem 2rem; }
+    .courses-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .course-card:first-child { grid-column: span 2; aspect-ratio: 16/7; grid-row: span 1; }
+    .course-card:nth-child(4) { grid-column: span 2; }
+    .opos { grid-template-columns: 1fr; padding: 3rem 2rem; gap: 2rem; }
+    .contact { grid-template-columns: 1fr; }
+    .contact-map, .contact-form-wrap { padding: 3rem 2rem; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    footer { padding: 3rem 1.5rem 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .cf-row { grid-template-columns: 1fr; }
+    .areas-top, .courses-top { flex-direction: column; align-items: flex-start; }
+  }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav id="main-nav">
-    <a href="#" class="nav-logo">
-      <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
-    </a>
-    <ul class="nav-links">
-      <li><a href="#areas">Formación</a></li>
-      <li><a href="#programas">Programas</a></li>
-      <li><a href="#oposiciones">Oposiciones</a></li>
-      <li><a href="#idiomas">Idiomas</a></li>
-      <li><a href="#contacto" class="nav-cta">Contactar</a></li>
-    </ul>
-  </nav>
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#areas">Formació</a></li>
+    <li><a href="#cicles">Cicles</a></li>
+    <li><a href="#oposicions">Oposicions</a></li>
+    <li><a href="#idiomes">Idiomes</a></li>
+    <li><a href="#contacte" class="nav-btn">Contactar</a></li>
+  </ul>
+  <div class="nav-ham" id="ham" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-noise"></div>
-    <div class="hero-left">
-      <div class="hero-eyebrow">Centro de Formación · Tarragona</div>
-      <h1 class="hero-title">
-        Tu futuro<br>
-        <strong>empieza aquí.</strong>
-        <em>Desde 1990.</em>
-      </h1>
-      <p class="hero-subtitle">
-        Formación profesional, idiomas, oposiciones y acceso a ciclos formativos. En Tarragona, para toda la provincia.
-      </p>
-      <div class="hero-actions">
-        <a href="#areas" class="btn-primary">Ver cursos →</a>
-        <a href="#contacto" class="btn-outline">Contactar</a>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-stats-grid">
-        <div class="stat-block">
-          <div class="stat-number" data-count="30">0</div>
-          <div class="stat-label">Años de experiencia</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-number" data-count="50">0</div>
-          <div class="stat-label">Cursos activos</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-number" data-count="95">0</div>
-          <div class="stat-label">% Satisfacción</div>
-        </div>
-        <div class="stat-block">
-          <div class="stat-number" data-count="5000">0</div>
-          <div class="stat-label">Alumnos formados</div>
-        </div>
-      </div>
-    </div>
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      <span class="scroll-text">Explorar</span>
-    </div>
-  </section>
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="inici">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
 
-  <!-- TICKER -->
-  <div class="ticker-wrap" aria-hidden="true">
-    <div class="ticker-track">
-      <span class="ticker-item">Ciclos Formativos <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Oposicions <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Anglès · Català · Espanyol <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Repasos ESO & Batxillerat <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Selectivitat <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Certificats Professionals <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">ACTIC Informàtica <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Seguretat Privada <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Ciclos Formativos <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Oposicions <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Anglès · Català · Espanyol <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Repasos ESO & Batxillerat <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Selectivitat <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Certificats Professionals <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">ACTIC Informàtica <span class="ticker-dot">◆</span></span>
-      <span class="ticker-item">Seguretat Privada <span class="ticker-dot">◆</span></span>
+  <div class="hero-text">
+    <div class="hero-tag">Centre de Formació · Tarragona</div>
+    <h1 class="hero-h1">
+      El teu futur<br>
+      <em>comença aquí.</em>
+    </h1>
+    <p class="hero-sub">Formació professional, idiomes, oposicions i accés a cicles formatius. A Tarragona, per a tota la província.</p>
+    <div class="hero-btns">
+      <a href="#areas" class="btn btn-cyan">Explorar cursos →</a>
+      <a href="#contacte" class="btn btn-ghost">Contactar</a>
     </div>
   </div>
 
-  <!-- AREAS -->
-  <section class="areas-section" id="areas">
-    <div class="areas-header">
-      <div>
-        <div class="section-label">Àrees de formació</div>
-        <h2 class="section-title">Tot el que<br><strong>necessites aprendre.</strong></h2>
+  <div class="hero-image">
+    <div class="hero-cards">
+      <div class="hero-card tall">
+        <img src="https://www.aulamagna.es/images/2023/05/03/educacion-infantil-am.jpg" alt="Educació Infantil" loading="lazy">
+        <div class="hero-card-label">Educació Infantil</div>
       </div>
-      <p class="section-lead" style="max-width:360px">Des de l'accés a cicles formatius fins a la preparació d'oposicions. Un centre, totes les opcions.</p>
-    </div>
-    <div class="areas-grid">
-      <div class="area-card fade-up">
-        <div class="area-icon">📚</div>
-        <div class="area-title">Repassos & Suport Escolar</div>
-        <div class="area-desc">Primària, ESO, Batxillerat, Selectivitat i cicles formatius. Reforç personalitzat per a tots els nivells.</div>
-        <div class="area-arrow">Primària → Universitat →</div>
+      <div class="hero-card">
+        <img src="https://www.aulamagna.es/images/2023/05/03/emergencias-sanitarias-am.jpg" alt="Emergències" loading="lazy">
+        <div class="hero-card-label">Emergències</div>
       </div>
-      <div class="area-card fade-up">
-        <div class="area-icon">🎓</div>
-        <div class="area-title">Cicles Formatius</div>
-        <div class="area-desc">Grau Mitjà i Superior: Infermeria, Emergències, Farmàcia, Educació Infantil, Dietètica, Informàtica i més.</div>
-        <div class="area-arrow">Grau Mitjà & Superior →</div>
-      </div>
-      <div class="area-card fade-up">
-        <div class="area-icon">🏛️</div>
-        <div class="area-title">Oposicions</div>
-        <div class="area-desc">Preparació intensiva: Mossos, Bombers, Guàrdia Urbana, Sanitat ICS, Justícia i docència.</div>
-        <div class="area-arrow">Ajuntament · Generalitat · Estat →</div>
-      </div>
-      <div class="area-card fade-up">
-        <div class="area-icon">🌍</div>
-        <div class="area-title">Idiomes</div>
-        <div class="area-desc">Anglès, Català i Espanyol per a estrangers (ELE). Preparació per a exàmens oficials DELE. Tots els nivells.</div>
-        <div class="area-arrow">Anglès · Català · ELE →</div>
-      </div>
-      <div class="area-card fade-up">
-        <div class="area-icon">💻</div>
-        <div class="area-title">Informàtica</div>
-        <div class="area-desc">Cursos ACTIC homologats (24h) i formació general en eines digitals per al treball i la vida quotidiana.</div>
-        <div class="area-arrow">ACTIC · Ofimàtica →</div>
-      </div>
-      <div class="area-card fade-up">
-        <div class="area-icon">🛡️</div>
-        <div class="area-title">Seguretat</div>
-        <div class="area-desc">Formació en seguretat privada, control d'accessos, especialitat en explosius i guarda rural. Certificacions oficials.</div>
-        <div class="area-arrow">Seguretat Privada · Rural →</div>
+      <div class="hero-card">
+        <img src="https://www.aulamagna.es/images/2023/05/03/bomberos-am.jpg" alt="Bombers" loading="lazy">
+        <div class="hero-card-label">Oposicions</div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- PROGRAMS -->
-  <section class="programs-section" id="programas">
-    <div class="programs-header">
-      <div>
-        <div class="section-label">Programes destacats</div>
-        <h2 class="section-title">Tria el teu<br><em>camí.</em></h2>
-      </div>
-      <p class="section-lead">Programes dissenyats per a qui vol resultats reals. Formació amb sortida professional directa.</p>
-    </div>
-    <div class="programs-grid">
-      <div class="program-featured fade-up">
-        <div class="program-tag">Més sol·licitat</div>
-        <h3 class="program-name">Cicles Formatius de Grau Superior</h3>
-        <p class="program-desc">Accedeix a títols oficials de Tècnic Superior en Educació Infantil, Animació Esportiva, Laboratori Clínic, Dietètica o Administració de Sistemes Informàtics.</p>
-        <div class="program-meta">
-          <div class="program-meta-item">
-            <span class="program-meta-val">2</span>
-            <span class="program-meta-key">Anys de formació</span>
-          </div>
-          <div class="program-meta-item">
-            <span class="program-meta-val">Oficial</span>
-            <span class="program-meta-key">Títol reconegut</span>
-          </div>
-          <div class="program-meta-item">
-            <span class="program-meta-val">5+</span>
-            <span class="program-meta-key">Especialitats</span>
-          </div>
-        </div>
-        <a href="#contacto" class="btn-primary">Sol·licitar informació →</a>
-      </div>
-      <div class="program-stack">
-        <div class="program-card fade-up">
-          <div class="program-tag">Preparació d'examen</div>
-          <h3 class="program-name">Selectivitat (PAU)</h3>
-          <p class="program-desc">Preparació intensiva amb professorat especialitzat per matèries.</p>
-          <a href="#contacto" class="btn-outline" style="font-size:0.8rem;padding:0.6rem 1.25rem">Més info →</a>
-        </div>
-        <div class="program-card fade-up">
-          <div class="program-tag">Certificació professional</div>
-          <h3 class="program-name">Graduat ESO</h3>
-          <p class="program-desc">Obtén el títol d'educació secundària obligatòria per a adults. Imprescindible per accedir a cicles i feina.</p>
-          <a href="#contacto" class="btn-outline" style="font-size:0.8rem;padding:0.6rem 1.25rem">Més info →</a>
-        </div>
-        <div class="program-card fade-up">
-          <div class="program-tag">610 hores</div>
-          <h3 class="program-name">Operaciones en Planta Química</h3>
-          <p class="program-desc">Certificat de professionalitat oficial. Formació tècnica completa per al sector industrial petroquímic de Tarragona.</p>
-          <a href="#contacto" class="btn-outline" style="font-size:0.8rem;padding:0.6rem 1.25rem">Més info →</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="scroll-down">
+    <span>Descobrir</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
 
-  <!-- OPOSICIONS -->
-  <div class="opos-section" id="oposiciones">
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Cicles Formatius <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Oposicions <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Anglès · Català · ELE <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Repassos ESO & Batxillerat <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Selectivitat <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Certificats Professionals <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">ACTIC Informàtica <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Seguretat Privada <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Cicles Formatius <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Oposicions <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Anglès · Català · ELE <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Repassos ESO & Batxillerat <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Selectivitat <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Certificats Professionals <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">ACTIC Informàtica <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Seguretat Privada <span class="marquee-sep">◆</span></span>
+  </div>
+</div>
+
+<!-- ═══ NUMBERS ═══ -->
+<div class="numbers">
+  <div class="num-block" data-reveal>
+    <div class="num-val"><span data-count="30">0</span>+</div>
+    <div class="num-label">Anys d'experiència</div>
+  </div>
+  <div class="num-block" data-reveal data-d="1">
+    <div class="num-val"><span data-count="50">0</span></div>
+    <div class="num-label">Cursos actius</div>
+  </div>
+  <div class="num-block" data-reveal data-d="2">
+    <div class="num-val"><span data-count="5000">0</span>+</div>
+    <div class="num-label">Alumnes formats</div>
+  </div>
+  <div class="num-block" data-reveal data-d="3">
+    <div class="num-val"><span data-count="95">0</span><span style="font-size:1.8rem">%</span></div>
+    <div class="num-label">Satisfacció</div>
+  </div>
+</div>
+
+<!-- ═══ AREAS ═══ -->
+<section class="areas" id="areas">
+  <div class="areas-top">
     <div>
-      <h2 class="opos-title">Prepara la teva oposició<br><em>amb garanties.</em></h2>
-      <p class="opos-desc">
-        Mossos d'Esquadra · Guàrdia Urbana · Bombers · Agents Rurals · Docència · Sanitat ICS · Justícia · Administració de l'Estat
-      </p>
+      <div class="section-eyebrow">Àrees de formació</div>
+      <h2 class="section-h2">Tot el que<br><em>necessites.</em></h2>
     </div>
-    <a href="#contacto" class="btn-white">Veure oposicions →</a>
+    <p class="section-p" style="max-width:360px;margin-bottom:0">Un centre, totes les opcions. Des del reforç escolar fins a l'accés a la universitat o a la funció pública.</p>
   </div>
-
-  <!-- IDIOMES + IT -->
-  <div class="extra-section" id="idiomas">
-    <div class="extra-block fade-up">
-      <div class="section-label">Idiomes</div>
-      <h2 class="section-title" style="font-size:2rem">Aprèn a<br><em>comunicar-te.</em></h2>
-      <div class="rule"></div>
-      <p class="section-lead" style="font-size:0.9rem">Cursos d'anglès, català i espanyol per a estrangers (ELE) amb preparació per a certificats oficials DELE. Tots els nivells.</p>
-      <div class="lang-tags">
-        <span class="lang-tag">Anglès A1-C1</span>
-        <span class="lang-tag">Català B1-C1</span>
-        <span class="lang-tag">Espanyol ELE Bàsic</span>
-        <span class="lang-tag">Espanyol ELE Avançat</span>
-        <span class="lang-tag">ELE Integració (45h)</span>
-        <span class="lang-tag">DELE Examen</span>
-      </div>
+  <div class="areas-grid">
+    <div class="area" data-reveal>
+      <div class="area-n">01</div>
+      <div class="area-icon">📚</div>
+      <div class="area-title">Repassos & Suport Escolar</div>
+      <div class="area-desc">Primària, ESO, Batxillerat, Selectivitat i cicles formatius. Reforç personalitzat per a tots els nivells.</div>
+      <div class="area-link">Veure més →</div>
     </div>
-    <div class="extra-block fade-up">
-      <div class="section-label">Informàtica</div>
-      <h2 class="section-title" style="font-size:2rem">Domina la<br><em>tecnologia.</em></h2>
-      <div class="rule"></div>
-      <p class="section-lead" style="font-size:0.9rem">Cursos ACTIC homologats per la Generalitat de Catalunya (24 hores) i formació en ofimàtica per al treball i la vida diària.</p>
-      <div class="lang-tags">
-        <span class="lang-tag lang-tag-alt">ACTIC Bàsic</span>
-        <span class="lang-tag lang-tag-alt">ACTIC Mitjà</span>
-        <span class="lang-tag lang-tag-alt">Ofimàtica</span>
-        <span class="lang-tag lang-tag-alt">Informàtica General</span>
-      </div>
+    <div class="area" data-reveal data-d="1">
+      <div class="area-n">02</div>
+      <div class="area-icon">🎓</div>
+      <div class="area-title">Cicles Formatius</div>
+      <div class="area-desc">Grau Mitjà i Superior en Infermeria, Emergències, Farmàcia, Educació Infantil, Dietètica, Informàtica.</div>
+      <div class="area-link">Veure més →</div>
+    </div>
+    <div class="area" data-reveal data-d="2">
+      <div class="area-n">03</div>
+      <div class="area-icon">🏛️</div>
+      <div class="area-title">Oposicions</div>
+      <div class="area-desc">Mossos, Bombers, Guàrdia Urbana, Agents Rurals, Docència, Sanitat ICS, Justícia i Administració.</div>
+      <div class="area-link">Veure més →</div>
+    </div>
+    <div class="area" data-reveal data-d="3">
+      <div class="area-n">04</div>
+      <div class="area-icon">🌍</div>
+      <div class="area-title">Idiomes</div>
+      <div class="area-desc">Anglès, Català i Espanyol ELE. Preparació DELE. Tots els nivells, tots els objectius.</div>
+      <div class="area-link">Veure més →</div>
+    </div>
+    <div class="area" data-reveal data-d="4">
+      <div class="area-n">05</div>
+      <div class="area-icon">💻</div>
+      <div class="area-title">Informàtica</div>
+      <div class="area-desc">Cursos ACTIC homologats per la Generalitat (24h) i formació en ofimàtica i eines digitals.</div>
+      <div class="area-link">Veure més →</div>
+    </div>
+    <div class="area" data-reveal data-d="5">
+      <div class="area-n">06</div>
+      <div class="area-icon">🛡️</div>
+      <div class="area-title">Seguretat</div>
+      <div class="area-desc">Vigilància i seguretat privada, control d'accessos, explosius i guarda rural. Certificacions oficials.</div>
+      <div class="area-link">Veure més →</div>
     </div>
   </div>
+</section>
 
-  <!-- CONTACT -->
-  <section class="contact-section" id="contacto">
+<!-- ═══ SPLIT: CICLES ═══ -->
+<div class="split" id="cicles">
+  <div class="split-img">
+    <img src="https://www.aulamagna.es/images/2023/05/03/laboratorio-clinico-y-biomedico-am.jpg" alt="Laboratori Clínic" loading="lazy">
+    <div class="split-img-overlay"></div>
+  </div>
+  <div class="split-body split-body-white" data-reveal>
+    <div class="split-tag">Cicles Formatius · Grau Superior</div>
+    <h2 class="section-h2">Títols oficials<br><em>amb futur.</em></h2>
+    <p class="section-p">Accedeix a titulacions homologades de Tècnic Superior. Formació pràctica, orientada al mercat laboral, amb sortida professional directa a Tarragona i arreu.</p>
+    <div class="split-items">
+      <div class="split-item">Educació Infantil</div>
+      <div class="split-item">Laboratori Clínic i Biomèdic</div>
+      <div class="split-item">Dietètica</div>
+      <div class="split-item">Animació Esportiva</div>
+      <div class="split-item">Administració de Sistemes Informàtics</div>
+      <div class="split-item">Integració Social</div>
+    </div>
+    <div style="margin-top:2rem">
+      <a href="#contacte" class="btn btn-cyan" style="display:inline-flex">Sol·licitar informació →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SPLIT: GRADUAT ESO (reversed) ═══ -->
+<div class="split rev">
+  <div class="split-img">
+    <img src="https://www.aulamagna.es/images/2023/05/11/operaciones-basicas-en-planta-quimica-am-soc.jpg" alt="Planta Química" loading="lazy">
+    <div class="split-img-overlay"></div>
+  </div>
+  <div class="split-body split-body-off" data-reveal>
+    <div class="split-tag">Certificats Professionals</div>
+    <h2 class="section-h2">Formació<br><em>amb sortida real.</em></h2>
+    <p class="section-p">Certificats de professionalitat oficials reconeguts per l'SEPE. Idonis per al sector industrial i de serveis de la demarcació de Tarragona.</p>
+    <div class="split-items">
+      <div class="split-item">Operacions en Planta Química (610h)</div>
+      <div class="split-item">Operacions bàsiques de restaurant i bar (290h)</div>
+      <div class="split-item">Vigilància i Seguretat Privada</div>
+      <div class="split-item">Graduat ESO per a adults</div>
+    </div>
+    <div style="margin-top:2rem">
+      <a href="#contacte" class="btn btn-cyan" style="display:inline-flex">Més informació →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COURSES MOSAIC ═══ -->
+<section class="courses" id="cursos">
+  <div class="courses-top">
     <div>
-      <div class="section-label">Contacte</div>
-      <h2 class="section-title">Parlem<br><strong>sense compromís.</strong></h2>
-      <div class="rule"></div>
-      <p class="section-lead" style="font-size:0.9rem;margin-bottom:2.5rem">Tens dubtes sobre quin curs triar? El nostre equip t'orienta sense compromís. Vine a visitar-nos o contacta'ns.</p>
-      <div class="contact-info">
-        <div class="contact-item">
-          <div class="contact-icon">📞</div>
-          <div>
-            <div class="contact-key">Telèfon</div>
-            <div class="contact-val">977 22 22 77</div>
-          </div>
+      <div class="section-eyebrow">Tots els cursos</div>
+      <h2 class="section-h2">Tria el teu<br><em>camí.</em></h2>
+    </div>
+    <a href="#contacte" class="btn btn-navy" style="align-self:flex-end">Veure catàleg complet →</a>
+  </div>
+  <div class="courses-grid">
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2023/05/03/cuidados-auxiliares-de-enfermeria-am.jpg" alt="Infermeria" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Grau Mitjà</div>
+        <div class="course-name">Cures Auxiliars d'Infermeria</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2023/05/03/emergencias-sanitarias-am.jpg" alt="Emergències" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Grau Mitjà</div>
+        <div class="course-name">Emergències Sanitàries</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2025/07/25/farmacia-y-parafarmacia.png" alt="Farmàcia" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Grau Mitjà</div>
+        <div class="course-name">Farmàcia i Parafarmàcia</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2023/05/03/mossos-esquadra-am.jpg" alt="Mossos" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Oposicions</div>
+        <div class="course-name">Mossos d'Esquadra</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2023/05/12/actic-nivel-medio-y-nivel-avanzado-am.jpg" alt="ACTIC" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Informàtica</div>
+        <div class="course-name">ACTIC Nivell Mitjà i Avançat</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2023/05/03/guia-en-el-medio-natural-y-de-tiempo-libre-am.jpg" alt="Guia Natural" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Grau Mitjà</div>
+        <div class="course-name">Guia en el Medi Natural</div>
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="https://www.aulamagna.es/images/2025/07/25/dietetica.png" alt="Dietètica" loading="lazy">
+      <div class="course-info">
+        <div class="course-cat">Grau Superior</div>
+        <div class="course-name">Dietètica</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPOSICIONS BAND ═══ -->
+<section class="opos" id="oposicions">
+  <div data-reveal>
+    <div class="section-eyebrow" style="color:var(--cyan)">Prepara't amb els millors</div>
+    <h2 class="section-h2 section-h2-inv">Oposicions<br><em>amb garanties.</em></h2>
+    <p class="section-p section-p-inv" style="margin-top:0.5rem">Preparació intensiva per accedir a la funció pública. Metodologia provada, professors especialitzats i materials actualitzats.</p>
+    <div class="opos-pills">
+      <span class="pill">Mossos d'Esquadra</span>
+      <span class="pill">Guàrdia Urbana</span>
+      <span class="pill">Bombers</span>
+      <span class="pill">Agents Rurals</span>
+      <span class="pill">Docència</span>
+      <span class="pill">Sanitat ICS</span>
+      <span class="pill">Justícia</span>
+      <span class="pill">Auxiliars Administratius</span>
+      <span class="pill">Policia Nacional</span>
+      <span class="pill">Administració de l'Estat</span>
+    </div>
+  </div>
+  <div data-reveal data-d="2">
+    <img src="https://www.aulamagna.es/images/2023/05/03/bomberos-am.jpg" alt="Bombers" loading="lazy"
+      style="width:100%;height:380px;object-fit:cover;border-radius:6px;filter:brightness(0.8) saturate(0.85)">
+    <div style="margin-top:1.5rem">
+      <a href="#contacte" class="btn btn-cyan">Inscriure'm →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPLIT: IDIOMES ═══ -->
+<div class="split" id="idiomes">
+  <div class="split-img">
+    <img src="https://www.aulamagna.es/images/2023/05/03/auxiliares-administrativos-generalitat-am.jpg" alt="Idiomes" loading="lazy">
+    <div class="split-img-overlay"></div>
+  </div>
+  <div class="split-body split-body-navy" data-reveal>
+    <div class="split-tag split-tag-inv">Idiomes & Informàtica</div>
+    <h2 class="section-h2 section-h2-inv">Comunica't.<br><em>Creix.</em></h2>
+    <p class="section-p section-p-inv">Anglès, Català i Espanyol per a estrangers (ELE) amb preparació per a certificats DELE. Cursos ACTIC homologats per la Generalitat.</p>
+    <div class="split-items" style="margin-top:1.5rem">
+      <div class="split-item split-item-inv">Anglès A1 → C1</div>
+      <div class="split-item split-item-inv">Català B1 → C1</div>
+      <div class="split-item split-item-inv">Espanyol ELE (bàsic, avançat, integració 45h)</div>
+      <div class="split-item split-item-inv">Preparació examen DELE</div>
+      <div class="split-item split-item-inv">ACTIC bàsic, mitjà i avançat</div>
+    </div>
+    <div style="margin-top:2rem">
+      <a href="#contacte" class="btn btn-cyan" style="display:inline-flex">Consultar horaris →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div class="contact" id="contacte">
+  <div class="contact-map">
+    <div style="position:relative">
+      <div class="section-eyebrow" style="color:var(--cyan)">Parlem</div>
+      <h2 class="section-h2 section-h2-inv">Sense<br><em>compromís.</em></h2>
+      <p class="section-p section-p-inv" style="margin-top:0.5rem;max-width:360px">El nostre equip t'orienta. Vine a visitar-nos o contacta'ns, et responem ràpidament.</p>
+    </div>
+    <div class="contact-details">
+      <div class="cdet">
+        <div class="cdet-icon">📞</div>
+        <div>
+          <div class="cdet-k">Telèfon</div>
+          <div class="cdet-v">977 22 22 77</div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon">✉️</div>
-          <div>
-            <div class="contact-key">Email</div>
-            <div class="contact-val">aulamagna@aulamagna.es</div>
-          </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">✉️</div>
+        <div>
+          <div class="cdet-k">Email</div>
+          <div class="cdet-v">aulamagna@aulamagna.es</div>
         </div>
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div>
-            <div class="contact-key">Adreça</div>
-            <div class="contact-val">Tarragona, España</div>
-          </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">📍</div>
+        <div>
+          <div class="cdet-k">Adreça</div>
+          <div class="cdet-v">Tarragona, Catalunya</div>
         </div>
       </div>
     </div>
-    <form class="contact-form" onsubmit="return false">
-      <div class="form-row">
-        <div class="form-field">
-          <label class="form-label">Nom</label>
-          <input type="text" class="form-input" placeholder="El teu nom">
+  </div>
+  <div class="contact-form-wrap">
+    <div class="section-eyebrow">Formulari de contacte</div>
+    <h2 class="section-h2" style="font-size:1.8rem">Escriu-nos</h2>
+    <form class="cf" onsubmit="return false">
+      <div class="cf-row">
+        <div class="cf-field">
+          <label class="cf-label">Nom</label>
+          <input type="text" class="cf-input" placeholder="El teu nom">
         </div>
-        <div class="form-field">
-          <label class="form-label">Telèfon</label>
-          <input type="tel" class="form-input" placeholder="000 000 000">
+        <div class="cf-field">
+          <label class="cf-label">Telèfon</label>
+          <input type="tel" class="cf-input" placeholder="000 000 000">
         </div>
       </div>
-      <div class="form-field">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-input" placeholder="tu@email.com">
+      <div class="cf-field">
+        <label class="cf-label">Email</label>
+        <input type="email" class="cf-input" placeholder="tu@email.com">
       </div>
-      <div class="form-field">
-        <label class="form-label">Àrea d'interès</label>
-        <select class="form-select">
-          <option value="">Selecciona una opció…</option>
+      <div class="cf-field">
+        <label class="cf-label">Àrea d'interès</label>
+        <select class="cf-select">
+          <option value="">Selecciona…</option>
           <option>Cicles Formatius</option>
           <option>Oposicions</option>
           <option>Repassos & Suport Escolar</option>
@@ -1035,103 +878,104 @@
           <option>Altre</option>
         </select>
       </div>
-      <div class="form-field">
-        <label class="form-label">Missatge (opcional)</label>
-        <textarea class="form-textarea" placeholder="Explica'ns què necessites…"></textarea>
+      <div class="cf-field">
+        <label class="cf-label">Missatge</label>
+        <textarea class="cf-ta" placeholder="Explica'ns què necessites…"></textarea>
       </div>
-      <button type="submit" class="btn-primary" style="margin-top:0.5rem">Enviar consulta →</button>
+      <button type="submit" class="btn btn-cyan" style="margin-top:0.25rem;border:none;cursor:pointer">Enviar missatge →</button>
     </form>
-  </section>
+  </div>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna" class="footer-logo">
-        <p class="footer-tagline">Centre de formació a Tarragona des de 1990. Formació acadèmica, professional i idiomes per a totes les edats.</p>
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
       </div>
-      <div>
-        <div class="footer-col-title">Formació</div>
-        <ul class="footer-links">
-          <li><a href="#">Cicles Formatius</a></li>
-          <li><a href="#">Repassos Escolars</a></li>
-          <li><a href="#">Selectivitat</a></li>
-          <li><a href="#">Graduat ESO</a></li>
-          <li><a href="#">Certificacions</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Oposicions</div>
-        <ul class="footer-links">
-          <li><a href="#">Mossos d'Esquadra</a></li>
-          <li><a href="#">Guàrdia Urbana</a></li>
-          <li><a href="#">Bombers</a></li>
-          <li><a href="#">Docència</a></li>
-          <li><a href="#">Sanitat ICS</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Contacte</div>
-        <ul class="footer-links">
-          <li><a href="tel:977222277">977 22 22 77</a></li>
-          <li><a href="mailto:aulamagna@aulamagna.es">aulamagna@aulamagna.es</a></li>
-          <li><a href="#">Com arribar</a></li>
-          <li><a href="#">Horaris</a></li>
-        </ul>
-      </div>
+      <p class="footer-tagline">Centre de formació a Tarragona des de 1990. Formació acadèmica, professional i idiomes per a totes les edats.</p>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2025 Aula Magna · Tarragona</span>
-      <div class="footer-legal">
-        <a href="#">Avís legal</a>
-        <a href="#">Privacitat</a>
-        <a href="#">Cookies</a>
-      </div>
+    <div>
+      <div class="ft-col-h">Formació</div>
+      <ul class="ft-links">
+        <li><a href="#">Cicles Formatius</a></li>
+        <li><a href="#">Repassos Escolars</a></li>
+        <li><a href="#">Selectivitat</a></li>
+        <li><a href="#">Graduat ESO</a></li>
+        <li><a href="#">Certificacions</a></li>
+      </ul>
     </div>
-  </footer>
+    <div>
+      <div class="ft-col-h">Oposicions</div>
+      <ul class="ft-links">
+        <li><a href="#">Mossos d'Esquadra</a></li>
+        <li><a href="#">Guàrdia Urbana</a></li>
+        <li><a href="#">Bombers</a></li>
+        <li><a href="#">Docència</a></li>
+        <li><a href="#">Sanitat ICS</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-h">Contacte</div>
+      <ul class="ft-links">
+        <li><a href="tel:977222277">977 22 22 77</a></li>
+        <li><a href="mailto:aulamagna@aulamagna.es">aulamagna@aulamagna.es</a></li>
+        <li><a href="#">Com arribar</a></li>
+        <li><a href="#">Horaris</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="fc">© 2025 Aula Magna · Tarragona</span>
+    <div class="fl">
+      <a href="#">Avís legal</a>
+      <a href="#">Privacitat</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    // Nav scroll
-    const nav = document.getElementById('main-nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
+<script>
+// Nav solid on scroll
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('solid', scrollY > 60);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
 
-    // Fade-up on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+// Reveal on scroll
+const reveals = document.querySelectorAll('[data-reveal]');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); revealObs.unobserve(e.target); }});
+}, { threshold: 0.1 });
+reveals.forEach(el => revealObs.observe(el));
 
-    // Counter animation
-    function animateCount(el) {
-      const target = parseInt(el.dataset.count);
-      const start = performance.now();
-      const duration = 1800;
-      const step = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        const ease = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(ease * target).toLocaleString('ca');
-        if (p < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    }
-    const statsObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); statsObs.unobserve(e.target); } });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('.stat-number').forEach(n => statsObs.observe(n));
+// Counter animation
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+function runCount(el) {
+  const target = +el.dataset.count;
+  const dur = 1600;
+  const t0 = performance.now();
+  const tick = (now) => {
+    const p = Math.min((now - t0) / dur, 1);
+    el.textContent = Math.round(easeOut(p) * target).toLocaleString('ca');
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+const countObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { runCount(e.target); countObs.unobserve(e.target); }});
+}, { threshold: 0.7 });
+document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-    // Hero entrance
-    document.addEventListener('DOMContentLoaded', () => {
-      const h = document.querySelector('.hero-left');
-      h.style.opacity = '0';
-      h.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        h.style.transition = 'opacity 1s ease, transform 1s ease';
-        h.style.opacity = '1';
-        h.style.transform = 'none';
-      }, 100);
-    });
-  </script>
+// Hero entrance
+window.addEventListener('DOMContentLoaded', () => {
+  const ht = document.querySelector('.hero-text');
+  ht.style.cssText = 'opacity:0;transform:translateY(20px)';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    ht.style.cssText = 'opacity:1;transform:none;transition:opacity 0.9s cubic-bezier(.22,1,.36,1),transform 0.9s cubic-bezier(.22,1,.36,1)';
+  }));
+});
+</script>
 </body>
 </html>
