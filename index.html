@@ -6,650 +6,946 @@
   <title>Aula Magna | Centre de Formació · Tarragona</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <style>
-  /* ─── RESET & VARS ─── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --navy:    #0F284D;
     --navy-d:  #021638;
+    --navy-m:  #163560;
     --cyan:    #00c6fb;
     --cyan-d:  #009bc5;
     --blue:    #0080FE;
     --orange:  #de6906;
     --white:   #ffffff;
-    --off:     #F4F6F8;
+    --off:     #F4F6F9;
     --ink:     #0D1821;
     --mid:     #4A5568;
+    --border:  #E2E8F0;
+    /* category accent colors */
+    --cat-cicles:   #0B8C6B;
+    --cat-opo:      #0F284D;
+    --cat-idiomes:  #C06A15;
+    --cat-info:     #5B47C9;
+    --cat-seg:      #2D3748;
+    --cat-rep:      #B7721A;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --fs: 'Syne', sans-serif;
     --fi: 'Instrument Serif', Georgia, serif;
     --fd: 'DM Sans', system-ui, sans-serif;
-    --ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   html { scroll-behavior: smooth; font-size: 16px; }
-  body { font-family: var(--fd); color: var(--ink); overflow-x: hidden; background: var(--white); }
+  body { font-family: var(--fd); color: var(--ink); background: var(--white); overflow-x: hidden; }
   img { display: block; max-width: 100%; }
   a { color: inherit; text-decoration: none; }
+  button { font-family: var(--fd); }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--navy-d);
+    padding: 0.45rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar-left { display: flex; gap: 1.5rem; }
+  .topbar-item {
+    font-family: var(--fs); font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.06em; color: rgba(255,255,255,0.55);
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .topbar-item:hover { color: var(--cyan); }
+  .topbar-item a { color: inherit; }
 
   /* ─── NAV ─── */
   .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    padding: 0 3rem;
-    height: 72px;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background 0.3s var(--ease), box-shadow 0.3s;
+    position: sticky; top: 0; z-index: 200;
+    background: var(--navy);
+    box-shadow: 0 1px 0 rgba(0,198,251,0.12);
   }
-  .nav.solid {
-    background: rgba(2,22,56,0.97);
-    backdrop-filter: blur(16px);
-    box-shadow: 0 1px 0 rgba(0,198,251,0.15);
+  .nav-inner {
+    max-width: 1400px; margin: 0 auto; padding: 0 3rem;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
   }
-  .nav-logo img { height: 42px; width: auto; }
-  .nav-menu { display: flex; gap: 0; list-style: none; }
-  .nav-menu a {
-    display: block; padding: 0 1.25rem;
-    font-family: var(--fs); font-size: 0.78rem; font-weight: 600;
+  .nav-logo img { height: 40px; width: auto; display: block; }
+  .nav-menu { display: flex; align-items: stretch; list-style: none; height: 100%; }
+  .nav-item { position: relative; }
+  .nav-item > a {
+    display: flex; align-items: center; gap: 0.3rem;
+    padding: 0 1.1rem; height: 68px;
+    font-family: var(--fs); font-size: 0.75rem; font-weight: 600;
     letter-spacing: 0.05em; text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
-    line-height: 72px;
-    transition: color 0.2s;
+    color: rgba(255,255,255,0.72);
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
   }
-  .nav-menu a:hover { color: var(--cyan); }
-  .nav-btn {
-    background: var(--cyan); color: var(--navy-d) !important;
-    padding: 0.55rem 1.4rem !important;
-    line-height: normal !important;
+  .nav-item > a:hover, .nav-item:hover > a { color: var(--cyan); background: rgba(0,198,251,0.06); }
+  .nav-item > a .chevron { font-size: 0.6rem; opacity: 0.5; transition: transform 0.2s; }
+  .nav-item:hover > a .chevron { transform: rotate(180deg); }
+
+  /* ─── DROPDOWN ─── */
+  .dropdown {
+    position: absolute; top: 100%; left: 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--cyan);
+    box-shadow: 0 16px 40px rgba(2,22,56,0.15);
+    min-width: 220px; padding: 0.5rem 0;
+    opacity: 0; pointer-events: none; transform: translateY(6px);
+    transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+    border-radius: 0 0 4px 4px;
+  }
+  .dropdown.wide { min-width: 480px; display: grid; grid-template-columns: 1fr 1fr; padding: 1rem; gap: 0.25rem; }
+  .nav-item:hover .dropdown { opacity: 1; pointer-events: all; transform: none; }
+  .dd-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.6rem 1rem; border-radius: 3px;
+    font-size: 0.875rem; color: var(--ink);
+    transition: background 0.15s, color 0.15s;
+  }
+  .dd-item:hover { background: var(--off); color: var(--navy); }
+  .dd-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dd-sep { height: 1px; background: var(--border); margin: 0.4rem 0.75rem; }
+  .dd-head { padding: 0.4rem 1rem 0.25rem; font-family: var(--fs); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+
+  .nav-cta {
+    background: var(--cyan) !important;
+    color: var(--navy-d) !important;
+    margin-left: 0.75rem;
+    padding: 0 1.5rem !important;
+    height: 38px !important;
+    border-radius: 3px;
     font-weight: 700 !important;
-    border-radius: 2px;
-    transition: background 0.2s, transform 0.15s !important;
     align-self: center;
+    display: flex; align-items: center;
+    transition: background 0.2s !important;
   }
-  .nav-btn:hover { background: var(--orange) !important; color: #fff !important; transform: translateY(-1px); }
+  .nav-cta:hover { background: var(--orange) !important; color: #fff !important; }
   .nav-ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-  .nav-ham span { width: 24px; height: 2px; background: #fff; transition: 0.3s; }
+  .nav-ham span { width: 24px; height: 2px; background: #fff; }
 
   /* ─── HERO ─── */
   .hero {
-    min-height: 100vh;
-    background: linear-gradient(135deg, var(--navy-d) 0%, var(--navy) 50%, #0a3a6b 100%);
+    background: linear-gradient(135deg, var(--navy-d) 0%, var(--navy) 55%, #0a3a6b 100%);
     display: grid; grid-template-columns: 1fr 1fr;
-    position: relative; overflow: hidden;
+    min-height: 82vh; position: relative; overflow: hidden;
   }
-  .hero-pattern {
-    position: absolute; inset: 0; opacity: 0.035;
+  .hero-dot-bg {
+    position: absolute; inset: 0; opacity: 0.03;
     background-image: radial-gradient(var(--cyan) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-size: 36px 36px;
   }
   .hero-glow {
-    position: absolute;
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(0,198,251,0.12) 0%, transparent 70%);
-    top: -100px; right: -100px;
+    position: absolute; top: -120px; right: 50px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,198,251,0.1) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero-text {
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 9rem 5rem 5rem 5rem;
-    position: relative; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 4rem 5rem 5rem; position: relative; z-index: 1;
   }
   .hero-tag {
-    font-family: var(--fs); font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--cyan); margin-bottom: 2rem;
-    display: flex; align-items: center; gap: 0.75rem;
+    font-family: var(--fs); font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan);
+    margin-bottom: 1.75rem; display: flex; align-items: center; gap: 0.65rem;
   }
-  .hero-tag::before { content: ''; width: 2.5rem; height: 1px; background: var(--cyan); }
+  .hero-tag::before { content: ''; width: 2rem; height: 1px; background: var(--cyan); }
   .hero-h1 {
-    font-family: var(--fi); font-size: clamp(3.5rem, 5.5vw, 6rem);
-    font-weight: 400; line-height: 1.02; color: var(--white);
-    margin-bottom: 2rem;
+    font-family: var(--fi); font-size: clamp(2.8rem, 5vw, 5.2rem);
+    font-weight: 400; line-height: 1.05; color: var(--white);
+    margin-bottom: 1.5rem;
   }
   .hero-h1 em { font-style: italic; color: var(--cyan); }
   .hero-sub {
-    font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.65);
-    max-width: 380px; line-height: 1.75; margin-bottom: 2.5rem;
+    font-size: 1rem; color: rgba(255,255,255,0.62);
+    max-width: 400px; line-height: 1.75; margin-bottom: 2.5rem;
   }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   .btn {
-    font-family: var(--fs); font-size: 0.8rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 0.95rem 2.2rem; border-radius: 2px; cursor: pointer; border: none;
-    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--fs); font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 0.9rem 2rem; border-radius: 3px; cursor: pointer;
+    border: none; display: inline-flex; align-items: center; gap: 0.5rem;
     transition: background 0.2s var(--ease), color 0.2s, transform 0.15s;
   }
   .btn-cyan { background: var(--cyan); color: var(--navy-d); }
   .btn-cyan:hover { background: #fff; transform: translateY(-1px); }
-  .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.28); }
   .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
-  .btn-navy { background: var(--navy-d); color: var(--cyan); }
-  .btn-navy:hover { background: var(--navy); }
+  .btn-blue { background: var(--blue); color: #fff; }
+  .btn-blue:hover { background: var(--orange); }
 
-  .hero-image {
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column;
-    justify-content: flex-end; padding: 9rem 5rem 5rem 2rem;
+  /* hero right: photo mosaic */
+  .hero-photos {
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+    gap: 8px; padding: 3rem 5rem 3rem 2rem; position: relative; z-index: 1;
   }
-  .hero-cards {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  }
-  .hero-card {
-    position: relative; overflow: hidden; border-radius: 6px;
-    aspect-ratio: 3/2;
-    border: 1px solid rgba(0,198,251,0.15);
-  }
-  .hero-card img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.6s var(--ease);
-    filter: brightness(0.75) saturate(0.9);
-  }
-  .hero-card:hover img { transform: scale(1.06); }
-  .hero-card-label {
+  .hero-photo { position: relative; overflow: hidden; border-radius: 6px; border: 1px solid rgba(0,198,251,0.12); }
+  .hero-photo:first-child { grid-row: span 2; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) saturate(0.85); transition: transform 0.7s var(--ease); }
+  .hero-photo:hover img { transform: scale(1.05); }
+  .hero-photo-label {
     position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 0.75rem 1rem;
+    padding: 0.6rem 0.9rem;
     background: linear-gradient(to top, rgba(2,22,56,0.9), transparent);
-    font-family: var(--fs); font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
+    font-family: var(--fs); font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.85);
   }
-  .hero-card.tall { grid-row: span 2; aspect-ratio: auto; }
 
   /* ─── MARQUEE ─── */
-  .marquee-wrap {
-    background: var(--cyan); overflow: hidden;
-    padding: 0.8rem 0; white-space: nowrap;
-  }
-  .marquee-track { display: inline-flex; animation: marquee 25s linear infinite; }
+  .marquee-wrap { background: var(--cyan); overflow: hidden; padding: 0.75rem 0; }
+  .marquee-track { display: inline-flex; animation: marquee 22s linear infinite; white-space: nowrap; }
   .marquee-track:hover { animation-play-state: paused; }
-  .marquee-item {
-    font-family: var(--fs); font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--navy-d); padding: 0 2.5rem;
-  }
-  .marquee-sep { color: rgba(2,22,56,0.4); }
+  .marquee-item { font-family: var(--fs); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy-d); padding: 0 2rem; }
+  .msep { color: rgba(2,22,56,0.35); }
   @keyframes marquee { to { transform: translateX(-50%); } }
 
-  /* ─── NUMBERS BAND ─── */
-  .numbers {
-    background: var(--off);
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid #e2e8f0;
+  /* ─── QUICK FIND ─── */
+  .quickfind {
+    background: var(--off); border-bottom: 1px solid var(--border);
+    padding: 2rem 5rem;
   }
-  .num-block {
-    padding: 3.5rem 3rem;
-    border-right: 1px solid #e2e8f0;
-    transition: background 0.2s;
+  .qf-label { font-family: var(--fs); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mid); margin-bottom: 1rem; }
+  .qf-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
+  .qf-card {
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    padding: 1.25rem 1rem;
+    background: var(--white); border: 1px solid var(--border); border-radius: 6px;
+    border-bottom: 3px solid transparent;
+    cursor: pointer; text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    text-decoration: none; color: inherit;
   }
-  .num-block:last-child { border-right: none; }
-  .num-block:hover { background: var(--white); }
-  .num-val {
-    font-family: var(--fi); font-size: 3.8rem;
-    font-weight: 400; line-height: 1;
-    color: var(--navy); margin-bottom: 0.5rem;
-  }
-  .num-val span { font-family: var(--fs); font-size: 2rem; color: var(--cyan); }
-  .num-label {
-    font-family: var(--fs); font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid);
-  }
+  .qf-card:hover { border-bottom-color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .qf-icon { font-size: 1.5rem; }
+  .qf-name { font-family: var(--fs); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; color: var(--navy); line-height: 1.3; }
+  .qf-count { font-size: 0.68rem; color: var(--mid); }
 
-  /* ─── SECTION SHARED ─── */
-  .section-eyebrow {
-    font-family: var(--fs); font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--cyan-d); margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.6rem;
-  }
-  .section-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--cyan-d); }
-  .section-h2 {
-    font-family: var(--fi); font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: 400; line-height: 1.1; color: var(--navy);
-    margin-bottom: 1.25rem;
-  }
-  .section-h2 em { font-style: italic; color: var(--cyan-d); }
-  .section-h2-inv { color: var(--white); }
-  .section-h2-inv em { color: var(--cyan); }
-  .section-p { font-size: 1rem; color: var(--mid); line-height: 1.8; max-width: 520px; }
-  .section-p-inv { color: rgba(255,255,255,0.65); }
+  /* ─── STATS BAND ─── */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--navy); }
+  .stat-block { padding: 3rem; border-right: 1px solid rgba(0,198,251,0.1); transition: background 0.2s; }
+  .stat-block:last-child { border-right: none; }
+  .stat-block:hover { background: var(--navy-m); }
+  .stat-num { font-family: var(--fi); font-size: 3.5rem; line-height: 1; color: var(--cyan); margin-bottom: 0.4rem; }
+  .stat-lbl { font-family: var(--fs); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
 
-  /* ─── AREAS GRID ─── */
-  .areas { padding: 6rem 5rem; background: var(--white); }
-  .areas-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; gap: 2rem; }
-  .areas-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0; border: 1px solid #e2e8f0;
-  }
-  .area {
-    padding: 2.75rem 2.5rem;
-    border-right: 1px solid #e2e8f0;
-    border-bottom: 1px solid #e2e8f0;
-    position: relative; overflow: hidden;
-    transition: background 0.25s var(--ease);
-    cursor: pointer;
-  }
-  .area:nth-child(3n) { border-right: none; }
-  .area:nth-child(4), .area:nth-child(5), .area:nth-child(6) { border-bottom: none; }
-  .area::after {
-    content: ''; position: absolute; bottom: 0; left: 0;
-    width: 0; height: 3px; background: var(--cyan);
-    transition: width 0.35s var(--ease);
-  }
-  .area:hover::after { width: 100%; }
-  .area:hover { background: var(--off); }
-  .area-icon { font-size: 1.6rem; margin-bottom: 1.25rem; }
-  .area-n {
-    position: absolute; top: 2rem; right: 2rem;
-    font-family: var(--fi); font-size: 1.5rem; color: #e2e8f0;
-    transition: color 0.3s;
-  }
-  .area:hover .area-n { color: var(--cyan); opacity: 0.3; }
-  .area-title {
-    font-family: var(--fs); font-size: 1.05rem; font-weight: 700;
-    color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3;
-  }
-  .area-desc { font-size: 0.875rem; color: var(--mid); line-height: 1.7; }
-  .area-link {
-    margin-top: 1.25rem; font-family: var(--fs); font-size: 0.7rem;
-    font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--cyan-d);
-    display: flex; align-items: center; gap: 0.4rem;
-    opacity: 0; transform: translateX(-6px);
-    transition: opacity 0.25s, transform 0.25s;
-  }
-  .area:hover .area-link { opacity: 1; transform: none; }
+  /* ─── SECTION HELPERS ─── */
+  .eyebrow { font-family: var(--fs); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan-d); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--cyan-d); }
+  .eyebrow-inv { color: var(--cyan); }
+  .eyebrow-inv::before { background: var(--cyan); }
+  .sh2 { font-family: var(--fi); font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 400; line-height: 1.1; color: var(--navy); margin-bottom: 1rem; }
+  .sh2 em { font-style: italic; color: var(--cyan-d); }
+  .sh2-inv { color: var(--white); }
+  .sh2-inv em { color: var(--cyan); }
+  .sp { font-size: 1rem; color: var(--mid); line-height: 1.8; max-width: 520px; }
+  .sp-inv { color: rgba(255,255,255,0.6); }
 
-  /* ─── SPLIT IMAGE SECTIONS ─── */
-  .split { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
-  .split.rev { direction: rtl; }
-  .split.rev > * { direction: ltr; }
-  .split-img { position: relative; overflow: hidden; }
-  .split-img img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.8s var(--ease);
-    filter: brightness(0.88);
+  /* ─── COURSE BROWSER ─── */
+  .browser { padding: 5rem; background: var(--white); }
+  .browser-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1.5rem; }
+  .tab-bar { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .tab {
+    font-family: var(--fs); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+    padding: 0.6rem 1.25rem; background: var(--white); color: var(--mid);
+    cursor: pointer; border: none; border-right: 1px solid var(--border);
+    transition: background 0.15s, color 0.15s; white-space: nowrap;
   }
-  .split:hover .split-img img { transform: scale(1.04); }
-  .split-img-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(2,22,56,0.4) 0%, transparent 60%);
-  }
-  .split-body {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem;
-  }
-  .split-body-navy { background: var(--navy); }
-  .split-body-white { background: var(--white); }
-  .split-body-off { background: var(--off); }
-  .split-tag {
-    display: inline-flex; align-items: center;
-    font-family: var(--fs); font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    background: rgba(0,198,251,0.12); color: var(--cyan-d);
-    padding: 0.35rem 0.85rem; border-radius: 2px; margin-bottom: 1.5rem;
-    width: fit-content;
-  }
-  .split-tag-inv { background: rgba(0,198,251,0.15); color: var(--cyan); }
-  .split-items { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .split-item {
-    display: flex; align-items: center; gap: 0.75rem;
-    font-size: 0.9rem; color: var(--mid);
-  }
-  .split-item::before {
-    content: ''; width: 5px; height: 5px; border-radius: 50%;
-    background: var(--cyan-d); flex-shrink: 0;
-  }
-  .split-item-inv { color: rgba(255,255,255,0.65); }
-  .split-item-inv::before { background: var(--cyan); }
+  .tab:last-child { border-right: none; }
+  .tab:hover { background: var(--off); color: var(--navy); }
+  .tab.active { background: var(--navy); color: var(--cyan); }
 
-  /* ─── COURSES MOSAIC ─── */
-  .courses { padding: 6rem 5rem; background: var(--off); }
-  .courses-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; gap: 2rem; }
   .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 240px 240px;
-    gap: 12px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
   }
   .course-card {
-    position: relative; overflow: hidden; border-radius: 4px;
-    cursor: pointer;
+    border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+    background: var(--white); transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+    cursor: pointer; display: flex; flex-direction: column;
   }
-  .course-card:first-child { grid-column: span 2; grid-row: span 2; }
-  .course-card:nth-child(4) { grid-column: span 2; }
-  .course-card img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.6s var(--ease), filter 0.4s;
-    filter: brightness(0.72) saturate(0.9);
+  .course-card:hover { box-shadow: 0 8px 32px rgba(2,22,56,0.12); transform: translateY(-3px); }
+  .course-img { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+  .course-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); transition: transform 0.5s var(--ease); }
+  .course-card:hover .course-img img { transform: scale(1.05); }
+  .course-badge {
+    position: absolute; top: 0.75rem; left: 0.75rem;
+    font-family: var(--fs); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; border-radius: 3px; color: #fff;
   }
-  .course-card:hover img { transform: scale(1.07); filter: brightness(0.55) saturate(1.1); }
-  .course-info {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 1.25rem 1.5rem;
-    background: linear-gradient(to top, rgba(2,22,56,0.92) 0%, transparent 100%);
-    transform: translateY(8px); opacity: 0.85;
-    transition: transform 0.35s var(--ease), opacity 0.35s;
-  }
-  .course-card:hover .course-info { transform: none; opacity: 1; }
-  .course-cat {
-    font-family: var(--fs); font-size: 0.62rem; font-weight: 700;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--cyan); margin-bottom: 0.3rem;
-  }
-  .course-name {
-    font-family: var(--fi); font-size: 1.05rem; color: #fff; line-height: 1.25;
-  }
-  .course-card:first-child .course-name { font-size: 1.4rem; }
+  .course-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .course-cat-label { font-family: var(--fs); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .course-name { font-family: var(--fs); font-size: 0.95rem; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 0.6rem; flex: 1; }
+  .course-meta { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .course-meta-item { font-size: 0.75rem; color: var(--mid); display: flex; align-items: center; gap: 0.3rem; }
+  .course-link { font-family: var(--fs); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); display: flex; align-items: center; gap: 0.3rem; transition: gap 0.2s; }
+  .course-card:hover .course-link { gap: 0.6rem; }
 
-  /* ─── OPOSICIONS BAND ─── */
-  .opos {
-    background: var(--navy);
-    padding: 5rem;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-    align-items: center;
-    position: relative; overflow: hidden;
+  /* panel switching */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ─── FEATURED SPLIT ─── */
+  .split { display: grid; grid-template-columns: 1fr 1fr; }
+  .split.rev > :first-child { order: 2; }
+  .split.rev > :last-child { order: 1; }
+  .split-img { position: relative; overflow: hidden; min-height: 480px; }
+  .split-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.78); transition: transform 0.8s var(--ease); }
+  .split:hover .split-img img { transform: scale(1.04); }
+  .split-img-ov { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(2,22,56,0.35), transparent 60%); }
+  .split-body { display: flex; flex-direction: column; justify-content: center; padding: 5rem; }
+  .split-navy { background: var(--navy); }
+  .split-off { background: var(--off); }
+  .split-white { background: var(--white); }
+  .split-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.75rem; }
+  .split-pill {
+    font-family: var(--fs); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 0.4rem 0.9rem; border-radius: 3px; color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(0,198,251,0.2);
+    transition: background 0.2s, border-color 0.2s, color 0.2s; cursor: pointer;
   }
-  .opos::before {
-    content: '';
-    position: absolute; top: -60px; right: -60px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(0,198,251,0.08), transparent 70%);
-    pointer-events: none;
-  }
+  .split-pill:hover { background: rgba(0,198,251,0.1); border-color: var(--cyan); color: #fff; }
+  .split-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.55rem; }
+  .split-li { display: flex; align-items: center; gap: 0.65rem; font-size: 0.9rem; color: var(--mid); }
+  .split-li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan-d); flex-shrink: 0; }
+  .split-li-inv { color: rgba(255,255,255,0.65); }
+  .split-li-inv::before { background: var(--cyan); }
+
+  /* ─── OPOSICIONS FULL ─── */
+  .opos { background: var(--navy); padding: 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .opos::before { content: ''; position: absolute; top: -60px; right: -60px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,198,251,0.07), transparent 70%); }
+  .opos-img { border-radius: 6px; overflow: hidden; }
+  .opos-img img { width: 100%; height: 380px; object-fit: cover; filter: brightness(0.8) saturate(0.85); border-radius: 6px; }
   .opos-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
-  .pill {
-    font-family: var(--fs); font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.06em;
-    padding: 0.45rem 1rem; border-radius: 2px;
-    border: 1px solid rgba(0,198,251,0.25);
-    color: rgba(255,255,255,0.7);
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
-    cursor: pointer;
-  }
-  .pill:hover { background: rgba(0,198,251,0.1); border-color: var(--cyan); color: #fff; }
 
   /* ─── CONTACT ─── */
-  .contact { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
-  .contact-map {
-    background: var(--navy);
+  .contact { display: grid; grid-template-columns: 1fr 1fr; }
+  .contact-left {
+    background: var(--navy); padding: 5rem;
     display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem;
     position: relative; overflow: hidden;
   }
-  .contact-map::before {
-    content: '';
-    position: absolute; inset: 0; opacity: 0.05;
-    background-image: radial-gradient(var(--cyan) 1px, transparent 1px);
-    background-size: 30px 30px;
-  }
+  .contact-left::before { content: ''; position: absolute; inset: 0; opacity: 0.03; background-image: radial-gradient(var(--cyan) 1px, transparent 1px); background-size: 28px 28px; }
   .contact-details { display: flex; flex-direction: column; gap: 2rem; margin-top: 2.5rem; position: relative; }
   .cdet { display: flex; gap: 1rem; align-items: flex-start; }
-  .cdet-icon {
-    width: 2.5rem; height: 2.5rem; flex-shrink: 0;
-    background: rgba(0,198,251,0.1); border: 1px solid rgba(0,198,251,0.2);
-    border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.9rem;
-  }
-  .cdet-k { font-family: var(--fs); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.2rem; }
+  .cdet-icon { width: 2.5rem; height: 2.5rem; flex-shrink: 0; background: rgba(0,198,251,0.1); border: 1px solid rgba(0,198,251,0.2); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+  .cdet-k { font-family: var(--fs); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.2rem; }
   .cdet-v { font-size: 1rem; color: #fff; font-weight: 500; }
-
-  .contact-form-wrap {
-    background: var(--white);
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem;
-  }
-  .cf { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-right { background: var(--white); padding: 5rem; display: flex; flex-direction: column; justify-content: center; }
+  .cf { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
   .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .cf-field { display: flex; flex-direction: column; gap: 0.4rem; }
-  .cf-label { font-family: var(--fs); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+  .cf-label { font-family: var(--fs); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
   .cf-input, .cf-select, .cf-ta {
-    border: 1px solid #e2e8f0; background: var(--off);
-    color: var(--ink); padding: 0.85rem 1rem;
+    border: 1px solid var(--border); background: var(--off);
+    color: var(--ink); padding: 0.8rem 1rem;
     font-family: var(--fd); font-size: 0.9rem;
-    border-radius: 3px; outline: none; width: 100%;
+    border-radius: 4px; outline: none; width: 100%;
     transition: border-color 0.2s, background 0.2s;
   }
   .cf-input:focus, .cf-select:focus, .cf-ta:focus { border-color: var(--cyan-d); background: var(--white); }
   .cf-ta { resize: vertical; min-height: 90px; }
-  .cf-select option { background: var(--white); }
 
   /* ─── FOOTER ─── */
-  footer {
-    background: var(--navy-d);
-    border-top: 1px solid rgba(0,198,251,0.1);
-    padding: 4rem 5rem 2rem;
-  }
+  footer { background: var(--navy-d); border-top: 1px solid rgba(0,198,251,0.1); padding: 4rem 5rem 2rem; }
   .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-  .footer-logo img { height: 40px; margin-bottom: 1rem; }
-  .footer-tagline { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; }
-  .ft-col-h { font-family: var(--fs); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.25rem; }
-  .ft-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-  .ft-links a { font-size: 0.875rem; color: rgba(255,255,255,0.5); transition: color 0.2s; }
-  .ft-links a:hover { color: var(--cyan); }
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .fc { font-size: 0.775rem; color: rgba(255,255,255,0.25); }
+  .footer-logo img { height: 38px; margin-bottom: 1rem; }
+  .footer-tag { font-size: 0.875rem; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 270px; }
+  .ft-h { font-family: var(--fs); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.25rem; }
+  .ft-ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .ft-ul a { font-size: 0.875rem; color: rgba(255,255,255,0.45); transition: color 0.2s; }
+  .ft-ul a:hover { color: var(--cyan); }
+  .footer-bot { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .fc { font-size: 0.775rem; color: rgba(255,255,255,0.22); }
   .fl { display: flex; gap: 1.5rem; }
-  .fl a { font-size: 0.775rem; color: rgba(255,255,255,0.25); transition: color 0.2s; }
+  .fl a { font-size: 0.775rem; color: rgba(255,255,255,0.22); transition: color 0.2s; }
   .fl a:hover { color: rgba(255,255,255,0.5); }
 
-  /* ─── ANIMATIONS ─── */
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
-  }
+  /* ─── REVEAL ─── */
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
   [data-reveal].on { opacity: 1; transform: none; }
   [data-reveal][data-d="1"] { transition-delay: 0.1s; }
-  [data-reveal][data-d="2"] { transition-delay: 0.2s; }
-  [data-reveal][data-d="3"] { transition-delay: 0.3s; }
-  [data-reveal][data-d="4"] { transition-delay: 0.4s; }
-  [data-reveal][data-d="5"] { transition-delay: 0.5s; }
-  [data-reveal][data-d="6"] { transition-delay: 0.6s; }
+  [data-reveal][data-d="2"] { transition-delay: 0.18s; }
+  [data-reveal][data-d="3"] { transition-delay: 0.26s; }
+  [data-reveal][data-d="4"] { transition-delay: 0.34s; }
+  [data-reveal][data-d="5"] { transition-delay: 0.42s; }
+  [data-reveal][data-d="6"] { transition-delay: 0.5s; }
 
   /* ─── SCROLL DOWN ─── */
-  .scroll-down {
-    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 2;
-  }
-  .scroll-down span { font-family: var(--fs); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-  .scroll-arrow {
-    width: 1px; height: 3rem;
-    background: linear-gradient(to bottom, rgba(0,198,251,0.7), transparent);
-    animation: arrowPulse 1.8s ease-in-out infinite;
-  }
-  @keyframes arrowPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
+  .scroll-down { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; z-index: 2; }
+  .scroll-down span { font-family: var(--fs); font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .scroll-arr { width: 1px; height: 2.5rem; background: linear-gradient(to bottom, rgba(0,198,251,0.6), transparent); animation: arrPulse 1.8s ease-in-out infinite; }
+  @keyframes arrPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
 
   /* ─── RESPONSIVE ─── */
-  @media (max-width: 1024px) {
+  @media (max-width: 1100px) {
     .hero { grid-template-columns: 1fr; }
-    .hero-image { display: none; }
-    .hero-text { padding: 8rem 2rem 5rem; }
-    .nav { padding: 0 1.5rem; }
+    .hero-photos { display: none; }
+    .hero-text { padding: 5rem 2rem 4rem; }
+    .topbar, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .nav-inner { padding: 0 1.5rem; }
     .nav-menu { display: none; }
     .nav-ham { display: flex; }
-    .numbers { grid-template-columns: 1fr 1fr; }
-    .num-block:nth-child(2) { border-right: none; }
-    .num-block:nth-child(3) { border-top: 1px solid #e2e8f0; }
-    .areas, .courses { padding: 4rem 1.5rem; }
-    .areas-grid { grid-template-columns: 1fr; }
-    .area:nth-child(3n) { border-right: 1px solid #e2e8f0; }
-    .area:nth-child(n) { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .quickfind { padding: 2rem 1.5rem; }
+    .qf-grid { grid-template-columns: repeat(3, 1fr); }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat-block:nth-child(2) { border-right: none; }
+    .stat-block:nth-child(3) { border-top: 1px solid rgba(0,198,251,0.1); }
+    .browser { padding: 4rem 1.5rem; }
+    .courses-grid { grid-template-columns: 1fr 1fr; }
     .split { grid-template-columns: 1fr; }
-    .split.rev { direction: ltr; }
-    .split-img { min-height: 300px; }
-    .split-body { padding: 3rem 2rem; }
-    .courses-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-    .course-card:first-child { grid-column: span 2; aspect-ratio: 16/7; grid-row: span 1; }
-    .course-card:nth-child(4) { grid-column: span 2; }
-    .opos { grid-template-columns: 1fr; padding: 3rem 2rem; gap: 2rem; }
+    .split.rev > :first-child { order: 1; }
+    .split.rev > :last-child { order: 2; }
+    .split-img { min-height: 280px; }
+    .split-body, .opos { padding: 3rem 2rem; }
+    .opos { grid-template-columns: 1fr; gap: 2rem; }
     .contact { grid-template-columns: 1fr; }
-    .contact-map, .contact-form-wrap { padding: 3rem 2rem; }
+    .contact-left, .contact-right { padding: 3rem 2rem; }
     .footer-top { grid-template-columns: 1fr 1fr; }
-    footer { padding: 3rem 1.5rem 2rem; }
-    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-bot { flex-direction: column; gap: 1rem; text-align: center; }
     .cf-row { grid-template-columns: 1fr; }
-    .areas-top, .courses-top { flex-direction: column; align-items: flex-start; }
+    .tab-bar { overflow-x: auto; border-radius: 4px; }
+    .browser-head { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 640px) {
+    .qf-grid { grid-template-columns: repeat(2, 1fr); }
+    .courses-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
   }
   </style>
 </head>
 <body>
 
+<!-- ═══ TOP BAR ═══ -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-item">📞 <a href="tel:977222277">977 22 22 77</a></span>
+    <span class="topbar-item">✉️ <a href="mailto:aulamagna@aulamagna.es">aulamagna@aulamagna.es</a></span>
+  </div>
+  <div class="topbar-item">📍 Tarragona, Catalunya</div>
+</div>
+
 <!-- ═══ NAV ═══ -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo">
-    <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
-  </a>
-  <ul class="nav-menu">
-    <li><a href="#areas">Formació</a></li>
-    <li><a href="#cicles">Cicles</a></li>
-    <li><a href="#oposicions">Oposicions</a></li>
-    <li><a href="#idiomes">Idiomes</a></li>
-    <li><a href="#contacte" class="nav-btn">Contactar</a></li>
-  </ul>
-  <div class="nav-ham" id="ham" aria-label="Menú">
-    <span></span><span></span><span></span>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
+    </a>
+    <ul class="nav-menu">
+
+      <li class="nav-item">
+        <a href="#cicles">Cicles Formatius <span class="chevron">▾</span></a>
+        <div class="dropdown wide">
+          <div>
+            <div class="dd-head">Grau Mitjà</div>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0B8C6B"></span>Cures Auxiliars d'Infermeria</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0B8C6B"></span>Emergències Sanitàries</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0B8C6B"></span>Farmàcia i Parafarmàcia</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D8C45"></span>Guia en el Medi Natural</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#5B47C9"></span>Sistemes Microinformàtics</a>
+          </div>
+          <div>
+            <div class="dd-head">Grau Superior</div>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0B8C6B"></span>Educació Infantil</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0B8C6B"></span>Laboratori Clínic</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0B8C6B"></span>Dietètica</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D8C45"></span>Animació Esportiva</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#5B47C9"></span>Administració de Sistemes Inf.</a>
+            <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#C06A15"></span>Integració Social</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#oposicions">Oposicions <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <div class="dd-head">Generalitat</div>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0F284D"></span>Mossos d'Esquadra</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0F284D"></span>Bombers</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0F284D"></span>Agents Rurals</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#0F284D"></span>Docència</a>
+          <div class="dd-sep"></div>
+          <div class="dd-head">Administració Local</div>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#163560"></span>Guàrdia Urbana</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#163560"></span>Auxiliars Administratius</a>
+          <div class="dd-sep"></div>
+          <div class="dd-head">Estat</div>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Sanitat ICS</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Justícia</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Policia Nacional</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#repassos">Repassos <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#B7721A"></span>Primària</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#B7721A"></span>ESO</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#B7721A"></span>Batxillerat</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#B7721A"></span>Selectivitat (PAU)</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#B7721A"></span>Graduat ESO Adults</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#idiomes">Idiomes &amp; IT <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <div class="dd-head">Idiomes</div>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#C06A15"></span>Anglès A1–C1</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#C06A15"></span>Català B1–C1</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#C06A15"></span>Espanyol ELE</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#C06A15"></span>Preparació DELE</a>
+          <div class="dd-sep"></div>
+          <div class="dd-head">Informàtica</div>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#5B47C9"></span>ACTIC Bàsic</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#5B47C9"></span>ACTIC Mitjà &amp; Avançat</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#5B47C9"></span>Ofimàtica</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="#certificats">Certificats <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Op. Planta Química (610h)</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Restaurant i Bar (290h)</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Seguretat Privada</a>
+          <a class="dd-item" href="#contacte"><span class="dd-dot" style="background:#2D3748"></span>Guarda Rural</a>
+        </div>
+      </li>
+
+      <a href="#contacte" class="nav-cta btn">Contactar →</a>
+    </ul>
+    <div class="nav-ham" id="ham"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="inici">
-  <div class="hero-pattern"></div>
+  <div class="hero-dot-bg"></div>
   <div class="hero-glow"></div>
 
   <div class="hero-text">
-    <div class="hero-tag">Centre de Formació · Tarragona</div>
-    <h1 class="hero-h1">
-      El teu futur<br>
-      <em>comença aquí.</em>
-    </h1>
-    <p class="hero-sub">Formació professional, idiomes, oposicions i accés a cicles formatius. A Tarragona, per a tota la província.</p>
+    <div class="hero-tag">Centre de Formació · Tarragona · Des de 1990</div>
+    <h1 class="hero-h1">El teu futur<br><em>comença aquí.</em></h1>
+    <p class="hero-sub">Cicles formatius, oposicions, idiomes i repassos. Tota la formació que necessites, al mateix lloc.</p>
     <div class="hero-btns">
-      <a href="#areas" class="btn btn-cyan">Explorar cursos →</a>
-      <a href="#contacte" class="btn btn-ghost">Contactar</a>
+      <a href="#browser" class="btn btn-cyan">Explorar cursos →</a>
+      <a href="#contacte" class="btn btn-ghost">Demanar informació</a>
     </div>
   </div>
 
-  <div class="hero-image">
-    <div class="hero-cards">
-      <div class="hero-card tall">
-        <img src="https://www.aulamagna.es/images/2023/05/03/educacion-infantil-am.jpg" alt="Educació Infantil" loading="lazy">
-        <div class="hero-card-label">Educació Infantil</div>
-      </div>
-      <div class="hero-card">
-        <img src="https://www.aulamagna.es/images/2023/05/03/emergencias-sanitarias-am.jpg" alt="Emergències" loading="lazy">
-        <div class="hero-card-label">Emergències</div>
-      </div>
-      <div class="hero-card">
-        <img src="https://www.aulamagna.es/images/2023/05/03/bomberos-am.jpg" alt="Bombers" loading="lazy">
-        <div class="hero-card-label">Oposicions</div>
-      </div>
+  <div class="hero-photos">
+    <div class="hero-photo">
+      <img src="https://www.aulamagna.es/images/2023/05/03/educacion-infantil-am.jpg" alt="Educació Infantil" loading="eager">
+      <div class="hero-photo-label">Educació Infantil</div>
+    </div>
+    <div class="hero-photo">
+      <img src="https://www.aulamagna.es/images/2023/05/03/emergencias-sanitarias-am.jpg" alt="Emergències" loading="eager">
+      <div class="hero-photo-label">Emergències</div>
+    </div>
+    <div class="hero-photo">
+      <img src="https://www.aulamagna.es/images/2023/05/03/mossos-esquadra-am.jpg" alt="Mossos" loading="eager">
+      <div class="hero-photo-label">Oposicions</div>
     </div>
   </div>
 
-  <div class="scroll-down">
-    <span>Descobrir</span>
-    <div class="scroll-arrow"></div>
-  </div>
+  <div class="scroll-down"><span>Descobrir</span><div class="scroll-arr"></div></div>
 </section>
 
 <!-- ═══ MARQUEE ═══ -->
 <div class="marquee-wrap" aria-hidden="true">
   <div class="marquee-track">
-    <span class="marquee-item">Cicles Formatius <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Oposicions <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Anglès · Català · ELE <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Repassos ESO & Batxillerat <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Selectivitat <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Certificats Professionals <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">ACTIC Informàtica <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Seguretat Privada <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Cicles Formatius <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Oposicions <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Anglès · Català · ELE <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Repassos ESO & Batxillerat <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Selectivitat <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Certificats Professionals <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">ACTIC Informàtica <span class="marquee-sep">◆</span></span>
-    <span class="marquee-item">Seguretat Privada <span class="marquee-sep">◆</span></span>
+    <span class="marquee-item">Cicles Formatius <span class="msep">◆</span></span>
+    <span class="marquee-item">Oposicions <span class="msep">◆</span></span>
+    <span class="marquee-item">Anglès · Català · ELE <span class="msep">◆</span></span>
+    <span class="marquee-item">Repassos ESO & Batxillerat <span class="msep">◆</span></span>
+    <span class="marquee-item">Selectivitat <span class="msep">◆</span></span>
+    <span class="marquee-item">Certificats Professionals <span class="msep">◆</span></span>
+    <span class="marquee-item">ACTIC Informàtica <span class="msep">◆</span></span>
+    <span class="marquee-item">Seguretat Privada <span class="msep">◆</span></span>
+    <span class="marquee-item">Cicles Formatius <span class="msep">◆</span></span>
+    <span class="marquee-item">Oposicions <span class="msep">◆</span></span>
+    <span class="marquee-item">Anglès · Català · ELE <span class="msep">◆</span></span>
+    <span class="marquee-item">Repassos ESO & Batxillerat <span class="msep">◆</span></span>
+    <span class="marquee-item">Selectivitat <span class="msep">◆</span></span>
+    <span class="marquee-item">Certificats Professionals <span class="msep">◆</span></span>
+    <span class="marquee-item">ACTIC Informàtica <span class="msep">◆</span></span>
+    <span class="marquee-item">Seguretat Privada <span class="msep">◆</span></span>
   </div>
 </div>
 
-<!-- ═══ NUMBERS ═══ -->
-<div class="numbers">
-  <div class="num-block" data-reveal>
-    <div class="num-val"><span data-count="30">0</span>+</div>
-    <div class="num-label">Anys d'experiència</div>
-  </div>
-  <div class="num-block" data-reveal data-d="1">
-    <div class="num-val"><span data-count="50">0</span></div>
-    <div class="num-label">Cursos actius</div>
-  </div>
-  <div class="num-block" data-reveal data-d="2">
-    <div class="num-val"><span data-count="5000">0</span>+</div>
-    <div class="num-label">Alumnes formats</div>
-  </div>
-  <div class="num-block" data-reveal data-d="3">
-    <div class="num-val"><span data-count="95">0</span><span style="font-size:1.8rem">%</span></div>
-    <div class="num-label">Satisfacció</div>
+<!-- ═══ QUICK FIND ═══ -->
+<div class="quickfind">
+  <div class="qf-label">Què estàs buscant?</div>
+  <div class="qf-grid">
+    <a href="#browser" class="qf-card" style="--accent:var(--cat-cicles)" onclick="switchTab('cicles')">
+      <div class="qf-icon">🎓</div>
+      <div class="qf-name">Cicles Formatius</div>
+      <div class="qf-count">GM & GS</div>
+    </a>
+    <a href="#browser" class="qf-card" style="--accent:var(--cat-opo)" onclick="switchTab('opos')">
+      <div class="qf-icon">🏛️</div>
+      <div class="qf-name">Oposicions</div>
+      <div class="qf-count">Generalitat · Estat</div>
+    </a>
+    <a href="#browser" class="qf-card" style="--accent:var(--cat-rep)" onclick="switchTab('repassos')">
+      <div class="qf-icon">📚</div>
+      <div class="qf-name">Repassos</div>
+      <div class="qf-count">ESO · Batxillerat · PAU</div>
+    </a>
+    <a href="#browser" class="qf-card" style="--accent:var(--cat-idiomes)" onclick="switchTab('idiomes')">
+      <div class="qf-icon">🌍</div>
+      <div class="qf-name">Idiomes</div>
+      <div class="qf-count">Anglès · Català · ELE</div>
+    </a>
+    <a href="#browser" class="qf-card" style="--accent:var(--cat-info)" onclick="switchTab('info')">
+      <div class="qf-icon">💻</div>
+      <div class="qf-name">Informàtica</div>
+      <div class="qf-count">ACTIC · Ofimàtica</div>
+    </a>
+    <a href="#browser" class="qf-card" style="--accent:var(--cat-seg)" onclick="switchTab('cert')">
+      <div class="qf-icon">🛡️</div>
+      <div class="qf-name">Certificats Prof.</div>
+      <div class="qf-count">Seguretat · Química</div>
+    </a>
   </div>
 </div>
 
-<!-- ═══ AREAS ═══ -->
-<section class="areas" id="areas">
-  <div class="areas-top">
+<!-- ═══ STATS ═══ -->
+<div class="stats">
+  <div class="stat-block" data-reveal>
+    <div class="stat-num"><span data-count="30">0</span>+</div>
+    <div class="stat-lbl">Anys d'experiència</div>
+  </div>
+  <div class="stat-block" data-reveal data-d="1">
+    <div class="stat-num"><span data-count="50">0</span></div>
+    <div class="stat-lbl">Cursos actius</div>
+  </div>
+  <div class="stat-block" data-reveal data-d="2">
+    <div class="stat-num"><span data-count="5000">0</span>+</div>
+    <div class="stat-lbl">Alumnes formats</div>
+  </div>
+  <div class="stat-block" data-reveal data-d="3">
+    <div class="stat-num"><span data-count="95">0</span>%</div>
+    <div class="stat-lbl">Satisfacció</div>
+  </div>
+</div>
+
+<!-- ═══ COURSE BROWSER ═══ -->
+<section class="browser" id="browser">
+  <div class="browser-head">
     <div>
-      <div class="section-eyebrow">Àrees de formació</div>
-      <h2 class="section-h2">Tot el que<br><em>necessites.</em></h2>
+      <div class="eyebrow">Tots els cursos</div>
+      <h2 class="sh2">Tria el teu <em>camí.</em></h2>
     </div>
-    <p class="section-p" style="max-width:360px;margin-bottom:0">Un centre, totes les opcions. Des del reforç escolar fins a l'accés a la universitat o a la funció pública.</p>
+    <div class="tab-bar" id="tab-bar">
+      <button class="tab active" data-tab="cicles" onclick="switchTab('cicles')">Cicles</button>
+      <button class="tab" data-tab="opos" onclick="switchTab('opos')">Oposicions</button>
+      <button class="tab" data-tab="repassos" onclick="switchTab('repassos')">Repassos</button>
+      <button class="tab" data-tab="idiomes" onclick="switchTab('idiomes')">Idiomes</button>
+      <button class="tab" data-tab="info" onclick="switchTab('info')">Informàtica</button>
+      <button class="tab" data-tab="cert" onclick="switchTab('cert')">Certificats</button>
+    </div>
   </div>
-  <div class="areas-grid">
-    <div class="area" data-reveal>
-      <div class="area-n">01</div>
-      <div class="area-icon">📚</div>
-      <div class="area-title">Repassos & Suport Escolar</div>
-      <div class="area-desc">Primària, ESO, Batxillerat, Selectivitat i cicles formatius. Reforç personalitzat per a tots els nivells.</div>
-      <div class="area-link">Veure més →</div>
+
+  <!-- CICLES -->
+  <div class="tab-panel active" id="panel-cicles">
+    <div class="courses-grid">
+      <div class="course-card" data-reveal>
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/cuidados-auxiliares-de-enfermeria-am.jpg" alt="Infermeria" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-cicles)">Grau Mitjà</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-cicles)">Sanitat</div>
+          <div class="course-name">Cures Auxiliars d'Infermeria</div>
+          <div class="course-meta">
+            <span class="course-meta-item">🕐 2 anys</span>
+            <span class="course-meta-item">📋 Títol oficial</span>
+          </div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="1">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/emergencias-sanitarias-am.jpg" alt="Emergències" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-cicles)">Grau Mitjà</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-cicles)">Sanitat</div>
+          <div class="course-name">Emergències Sanitàries</div>
+          <div class="course-meta">
+            <span class="course-meta-item">🕐 2 anys</span>
+            <span class="course-meta-item">📋 Títol oficial</span>
+          </div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="2">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2025/07/25/farmacia-y-parafarmacia.png" alt="Farmàcia" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-cicles)">Grau Mitjà</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-cicles)">Sanitat</div>
+          <div class="course-name">Farmàcia i Parafarmàcia</div>
+          <div class="course-meta">
+            <span class="course-meta-item">🕐 2 anys</span>
+            <span class="course-meta-item">📋 Títol oficial</span>
+          </div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="3">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/educacion-infantil-am.jpg" alt="Educació Infantil" loading="lazy">
+          <span class="course-badge" style="background:#163560">Grau Superior</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:#163560">Serveis Socials</div>
+          <div class="course-name">Educació Infantil</div>
+          <div class="course-meta">
+            <span class="course-meta-item">🕐 2 anys</span>
+            <span class="course-meta-item">📋 Títol oficial</span>
+          </div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="4">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/laboratorio-clinico-y-biomedico-am.jpg" alt="Laboratori" loading="lazy">
+          <span class="course-badge" style="background:#163560">Grau Superior</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:#163560">Sanitat</div>
+          <div class="course-name">Laboratori Clínic i Biomèdic</div>
+          <div class="course-meta">
+            <span class="course-meta-item">🕐 2 anys</span>
+            <span class="course-meta-item">📋 Títol oficial</span>
+          </div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="5">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2025/07/25/dietetica.png" alt="Dietètica" loading="lazy">
+          <span class="course-badge" style="background:#163560">Grau Superior</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:#163560">Sanitat</div>
+          <div class="course-name">Dietètica</div>
+          <div class="course-meta">
+            <span class="course-meta-item">🕐 2 anys</span>
+            <span class="course-meta-item">📋 Títol oficial</span>
+          </div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
     </div>
-    <div class="area" data-reveal data-d="1">
-      <div class="area-n">02</div>
-      <div class="area-icon">🎓</div>
-      <div class="area-title">Cicles Formatius</div>
-      <div class="area-desc">Grau Mitjà i Superior en Infermeria, Emergències, Farmàcia, Educació Infantil, Dietètica, Informàtica.</div>
-      <div class="area-link">Veure més →</div>
+  </div>
+
+  <!-- OPOSICIONS -->
+  <div class="tab-panel" id="panel-opos">
+    <div class="courses-grid">
+      <div class="course-card" data-reveal>
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/mossos-esquadra-am.jpg" alt="Mossos" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-opo)">Generalitat</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-opo)">Seguretat</div>
+          <div class="course-name">Mossos d'Esquadra</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Convocatòria anual</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="1">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/bomberos-am.jpg" alt="Bombers" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-opo)">Generalitat</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-opo)">Emergències</div>
+          <div class="course-name">Cos de Bombers</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Convocatòria oberta</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="2">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/03/auxiliares-administrativos-generalitat-am.jpg" alt="Administratius" loading="lazy">
+          <span class="course-badge" style="background:#163560">Administració</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:#163560">Funció Pública</div>
+          <div class="course-name">Auxiliars Administratius Generalitat</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Propera convocatòria</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
     </div>
-    <div class="area" data-reveal data-d="2">
-      <div class="area-n">03</div>
-      <div class="area-icon">🏛️</div>
-      <div class="area-title">Oposicions</div>
-      <div class="area-desc">Mossos, Bombers, Guàrdia Urbana, Agents Rurals, Docència, Sanitat ICS, Justícia i Administració.</div>
-      <div class="area-link">Veure més →</div>
+  </div>
+
+  <!-- REPASSOS -->
+  <div class="tab-panel" id="panel-repassos">
+    <div class="courses-grid">
+      <div class="course-card" data-reveal>
+        <div class="course-img" style="background:linear-gradient(135deg,#1a3a2a,#2d6a4f);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
+          <span style="font-size:3rem">📚</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-rep)">Educació Secundària</div>
+          <div class="course-name">Repassos ESO (1r–4t)</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Tot el curs</span><span class="course-meta-item">👥 Grups reduïts</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="1">
+        <div class="course-img" style="background:linear-gradient(135deg,#3a1a0a,#6a2d0f);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
+          <span style="font-size:3rem">🎓</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-rep)">Batxillerat</div>
+          <div class="course-name">Repassos Batxillerat (1r i 2n)</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Tot el curs</span><span class="course-meta-item">👥 Atenció personalitzada</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="2">
+        <div class="course-img" style="background:linear-gradient(135deg,#1a1a3a,#2d2d6a);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
+          <span style="font-size:3rem">🏛️</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-rep)">Accés Universitat</div>
+          <div class="course-name">Selectivitat (PAU) — Preparació Intensiva</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Juny</span><span class="course-meta-item">📋 Totes les matèries</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
     </div>
-    <div class="area" data-reveal data-d="3">
-      <div class="area-n">04</div>
-      <div class="area-icon">🌍</div>
-      <div class="area-title">Idiomes</div>
-      <div class="area-desc">Anglès, Català i Espanyol ELE. Preparació DELE. Tots els nivells, tots els objectius.</div>
-      <div class="area-link">Veure més →</div>
+  </div>
+
+  <!-- IDIOMES -->
+  <div class="tab-panel" id="panel-idiomes">
+    <div class="courses-grid">
+      <div class="course-card" data-reveal>
+        <div class="course-img" style="background:linear-gradient(135deg,#1a2a3a,#2d4a6a);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
+          <span style="font-size:3rem">🇬🇧</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-idiomes)">Idiomes</div>
+          <div class="course-name">Anglès A1 → C1</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Tot l'any</span><span class="course-meta-item">📋 Tots els nivells</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="1">
+        <div class="course-img" style="background:linear-gradient(135deg,#1a3a1a,#2d6a2d);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
+          <span style="font-size:3rem">🇨🇦</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-idiomes)">Idiomes</div>
+          <div class="course-name">Català B1 → C1</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Tot l'any</span><span class="course-meta-item">📋 B1, B2, C1</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="2">
+        <div class="course-img" style="background:linear-gradient(135deg,#3a1a1a,#6a2d2d);display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
+          <span style="font-size:3rem">🇪🇸</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-idiomes)">Idiomes</div>
+          <div class="course-name">Espanyol ELE — Integració i DELE</div>
+          <div class="course-meta"><span class="course-meta-item">📅 Curs d'integració 45h</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
     </div>
-    <div class="area" data-reveal data-d="4">
-      <div class="area-n">05</div>
-      <div class="area-icon">💻</div>
-      <div class="area-title">Informàtica</div>
-      <div class="area-desc">Cursos ACTIC homologats per la Generalitat (24h) i formació en ofimàtica i eines digitals.</div>
-      <div class="area-link">Veure més →</div>
+  </div>
+
+  <!-- INFORMATICA -->
+  <div class="tab-panel" id="panel-info">
+    <div class="courses-grid">
+      <div class="course-card" data-reveal>
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/12/actic-nivel-medio-y-nivel-avanzado-am.jpg" alt="ACTIC" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-info)">Homologat Generalitat</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-info)">Informàtica</div>
+          <div class="course-name">ACTIC Bàsic, Mitjà i Avançat</div>
+          <div class="course-meta"><span class="course-meta-item">🕐 24 hores</span><span class="course-meta-item">📋 Certificat oficial</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="1">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/08/07/sistemas-microinformaticos-y-redes-am.jpg" alt="Informàtica" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-info)">Cicle GM</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-info)">Informàtica</div>
+          <div class="course-name">Sistemes Microinformàtics i Xarxes</div>
+          <div class="course-meta"><span class="course-meta-item">🕐 2 anys</span><span class="course-meta-item">📋 Títol oficial</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="2">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/08/07/administracion-de-sistemas-informaticos-en-red-am.jpg" alt="ASIR" loading="lazy">
+          <span class="course-badge" style="background:#163560">Cicle GS</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:#163560">Informàtica</div>
+          <div class="course-name">Administració de Sistemes Informàtics en Xarxa</div>
+          <div class="course-meta"><span class="course-meta-item">🕐 2 anys</span><span class="course-meta-item">📋 Títol oficial</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
     </div>
-    <div class="area" data-reveal data-d="5">
-      <div class="area-n">06</div>
-      <div class="area-icon">🛡️</div>
-      <div class="area-title">Seguretat</div>
-      <div class="area-desc">Vigilància i seguretat privada, control d'accessos, explosius i guarda rural. Certificacions oficials.</div>
-      <div class="area-link">Veure més →</div>
+  </div>
+
+  <!-- CERTIFICATS -->
+  <div class="tab-panel" id="panel-cert">
+    <div class="courses-grid">
+      <div class="course-card" data-reveal>
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/11/operaciones-basicas-en-planta-quimica-am-soc.jpg" alt="Planta Química" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-seg)">610 hores</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-seg)">Indústria</div>
+          <div class="course-name">Operacions Bàsiques en Planta Química</div>
+          <div class="course-meta"><span class="course-meta-item">📋 Certificat SEPE</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="1">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/10/18/operaciones-bsicas-de-restaurante-y-bar.jpg" alt="Restaurant" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-seg)">290 hores</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-seg)">Hostaleria</div>
+          <div class="course-name">Operacions Bàsiques de Restaurant i Bar</div>
+          <div class="course-meta"><span class="course-meta-item">📋 Certificat SEPE</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
+      <div class="course-card" data-reveal data-d="2">
+        <div class="course-img">
+          <img src="https://www.aulamagna.es/images/2023/05/11/vigilancia-seguridad-privada-y-proteccin-de-personas-am-soc.jpg" alt="Seguretat" loading="lazy">
+          <span class="course-badge" style="background:var(--cat-seg)">Homologat</span>
+        </div>
+        <div class="course-body">
+          <div class="course-cat-label" style="color:var(--cat-seg)">Seguretat</div>
+          <div class="course-name">Vigilància i Seguretat Privada</div>
+          <div class="course-meta"><span class="course-meta-item">📋 Certificació oficial</span></div>
+          <a href="#contacte" class="course-link">Més informació →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -657,212 +953,102 @@
 <!-- ═══ SPLIT: CICLES ═══ -->
 <div class="split" id="cicles">
   <div class="split-img">
-    <img src="https://www.aulamagna.es/images/2023/05/03/laboratorio-clinico-y-biomedico-am.jpg" alt="Laboratori Clínic" loading="lazy">
-    <div class="split-img-overlay"></div>
+    <img src="https://www.aulamagna.es/images/2023/05/03/laboratorio-clinico-y-biomedico-am.jpg" alt="Laboratori" loading="lazy">
+    <div class="split-img-ov"></div>
   </div>
-  <div class="split-body split-body-white" data-reveal>
-    <div class="split-tag">Cicles Formatius · Grau Superior</div>
-    <h2 class="section-h2">Títols oficials<br><em>amb futur.</em></h2>
-    <p class="section-p">Accedeix a titulacions homologades de Tècnic Superior. Formació pràctica, orientada al mercat laboral, amb sortida professional directa a Tarragona i arreu.</p>
-    <div class="split-items">
-      <div class="split-item">Educació Infantil</div>
-      <div class="split-item">Laboratori Clínic i Biomèdic</div>
-      <div class="split-item">Dietètica</div>
-      <div class="split-item">Animació Esportiva</div>
-      <div class="split-item">Administració de Sistemes Informàtics</div>
-      <div class="split-item">Integració Social</div>
+  <div class="split-body split-white" data-reveal>
+    <div class="split-tag" style="background:rgba(11,140,107,0.1);color:var(--cat-cicles)">Cicles Formatius · Títols Oficials</div>
+    <h2 class="sh2">Formació<br><em>amb futur real.</em></h2>
+    <p class="sp">Accedeix a titulacions de Tècnic i Tècnic Superior homologades. Formació pràctica orientada al mercat laboral de Tarragona i Catalunya.</p>
+    <div class="split-list">
+      <div class="split-li">Educació Infantil · Laboratori Clínic · Dietètica</div>
+      <div class="split-li">Infermeria · Emergències · Farmàcia</div>
+      <div class="split-li">Animació Esportiva · Integració Social</div>
+      <div class="split-li">Sistemes Informàtics · Administració de Xarxes</div>
+      <div class="split-li">Guia en el Medi Natural</div>
     </div>
-    <div style="margin-top:2rem">
-      <a href="#contacte" class="btn btn-cyan" style="display:inline-flex">Sol·licitar informació →</a>
-    </div>
+    <div style="margin-top:2rem"><a href="#contacte" class="btn btn-cyan">Sol·licitar informació →</a></div>
   </div>
 </div>
 
-<!-- ═══ SPLIT: GRADUAT ESO (reversed) ═══ -->
-<div class="split rev">
-  <div class="split-img">
-    <img src="https://www.aulamagna.es/images/2023/05/11/operaciones-basicas-en-planta-quimica-am-soc.jpg" alt="Planta Química" loading="lazy">
-    <div class="split-img-overlay"></div>
-  </div>
-  <div class="split-body split-body-off" data-reveal>
-    <div class="split-tag">Certificats Professionals</div>
-    <h2 class="section-h2">Formació<br><em>amb sortida real.</em></h2>
-    <p class="section-p">Certificats de professionalitat oficials reconeguts per l'SEPE. Idonis per al sector industrial i de serveis de la demarcació de Tarragona.</p>
-    <div class="split-items">
-      <div class="split-item">Operacions en Planta Química (610h)</div>
-      <div class="split-item">Operacions bàsiques de restaurant i bar (290h)</div>
-      <div class="split-item">Vigilància i Seguretat Privada</div>
-      <div class="split-item">Graduat ESO per a adults</div>
-    </div>
-    <div style="margin-top:2rem">
-      <a href="#contacte" class="btn btn-cyan" style="display:inline-flex">Més informació →</a>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ COURSES MOSAIC ═══ -->
-<section class="courses" id="cursos">
-  <div class="courses-top">
-    <div>
-      <div class="section-eyebrow">Tots els cursos</div>
-      <h2 class="section-h2">Tria el teu<br><em>camí.</em></h2>
-    </div>
-    <a href="#contacte" class="btn btn-navy" style="align-self:flex-end">Veure catàleg complet →</a>
-  </div>
-  <div class="courses-grid">
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2023/05/03/cuidados-auxiliares-de-enfermeria-am.jpg" alt="Infermeria" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Grau Mitjà</div>
-        <div class="course-name">Cures Auxiliars d'Infermeria</div>
-      </div>
-    </div>
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2023/05/03/emergencias-sanitarias-am.jpg" alt="Emergències" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Grau Mitjà</div>
-        <div class="course-name">Emergències Sanitàries</div>
-      </div>
-    </div>
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2025/07/25/farmacia-y-parafarmacia.png" alt="Farmàcia" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Grau Mitjà</div>
-        <div class="course-name">Farmàcia i Parafarmàcia</div>
-      </div>
-    </div>
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2023/05/03/mossos-esquadra-am.jpg" alt="Mossos" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Oposicions</div>
-        <div class="course-name">Mossos d'Esquadra</div>
-      </div>
-    </div>
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2023/05/12/actic-nivel-medio-y-nivel-avanzado-am.jpg" alt="ACTIC" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Informàtica</div>
-        <div class="course-name">ACTIC Nivell Mitjà i Avançat</div>
-      </div>
-    </div>
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2023/05/03/guia-en-el-medio-natural-y-de-tiempo-libre-am.jpg" alt="Guia Natural" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Grau Mitjà</div>
-        <div class="course-name">Guia en el Medi Natural</div>
-      </div>
-    </div>
-    <div class="course-card">
-      <img src="https://www.aulamagna.es/images/2025/07/25/dietetica.png" alt="Dietètica" loading="lazy">
-      <div class="course-info">
-        <div class="course-cat">Grau Superior</div>
-        <div class="course-name">Dietètica</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ OPOSICIONS BAND ═══ -->
+<!-- ═══ OPOSICIONS ═══ -->
 <section class="opos" id="oposicions">
   <div data-reveal>
-    <div class="section-eyebrow" style="color:var(--cyan)">Prepara't amb els millors</div>
-    <h2 class="section-h2 section-h2-inv">Oposicions<br><em>amb garanties.</em></h2>
-    <p class="section-p section-p-inv" style="margin-top:0.5rem">Preparació intensiva per accedir a la funció pública. Metodologia provada, professors especialitzats i materials actualitzats.</p>
+    <div class="eyebrow eyebrow-inv">Accés a la funció pública</div>
+    <h2 class="sh2 sh2-inv">Oposicions<br><em>amb garanties.</em></h2>
+    <p class="sp sp-inv">Professors especialitzats, materials actualitzats cada convocatòria i metodologia provada. Preparació intensiva per accedir als cossos de l'Administració.</p>
     <div class="opos-pills">
-      <span class="pill">Mossos d'Esquadra</span>
-      <span class="pill">Guàrdia Urbana</span>
-      <span class="pill">Bombers</span>
-      <span class="pill">Agents Rurals</span>
-      <span class="pill">Docència</span>
-      <span class="pill">Sanitat ICS</span>
-      <span class="pill">Justícia</span>
-      <span class="pill">Auxiliars Administratius</span>
-      <span class="pill">Policia Nacional</span>
-      <span class="pill">Administració de l'Estat</span>
+      <span class="split-pill">Mossos d'Esquadra</span>
+      <span class="split-pill">Guàrdia Urbana</span>
+      <span class="split-pill">Bombers</span>
+      <span class="split-pill">Agents Rurals</span>
+      <span class="split-pill">Docència</span>
+      <span class="split-pill">Sanitat ICS</span>
+      <span class="split-pill">Justícia</span>
+      <span class="split-pill">Aux. Administratius</span>
+      <span class="split-pill">Policia Nacional</span>
+      <span class="split-pill">Administració Estat</span>
     </div>
+    <div style="margin-top:2rem"><a href="#contacte" class="btn btn-cyan">Inscriure'm →</a></div>
   </div>
-  <div data-reveal data-d="2">
-    <img src="https://www.aulamagna.es/images/2023/05/03/bomberos-am.jpg" alt="Bombers" loading="lazy"
-      style="width:100%;height:380px;object-fit:cover;border-radius:6px;filter:brightness(0.8) saturate(0.85)">
-    <div style="margin-top:1.5rem">
-      <a href="#contacte" class="btn btn-cyan">Inscriure'm →</a>
-    </div>
+  <div class="opos-img" data-reveal data-d="2">
+    <img src="https://www.aulamagna.es/images/2023/05/03/bomberos-am.jpg" alt="Bombers" loading="lazy">
   </div>
 </section>
 
 <!-- ═══ SPLIT: IDIOMES ═══ -->
-<div class="split" id="idiomes">
+<div class="split rev" id="idiomes">
   <div class="split-img">
     <img src="https://www.aulamagna.es/images/2023/05/03/auxiliares-administrativos-generalitat-am.jpg" alt="Idiomes" loading="lazy">
-    <div class="split-img-overlay"></div>
+    <div class="split-img-ov"></div>
   </div>
-  <div class="split-body split-body-navy" data-reveal>
-    <div class="split-tag split-tag-inv">Idiomes & Informàtica</div>
-    <h2 class="section-h2 section-h2-inv">Comunica't.<br><em>Creix.</em></h2>
-    <p class="section-p section-p-inv">Anglès, Català i Espanyol per a estrangers (ELE) amb preparació per a certificats DELE. Cursos ACTIC homologats per la Generalitat.</p>
-    <div class="split-items" style="margin-top:1.5rem">
-      <div class="split-item split-item-inv">Anglès A1 → C1</div>
-      <div class="split-item split-item-inv">Català B1 → C1</div>
-      <div class="split-item split-item-inv">Espanyol ELE (bàsic, avançat, integració 45h)</div>
-      <div class="split-item split-item-inv">Preparació examen DELE</div>
-      <div class="split-item split-item-inv">ACTIC bàsic, mitjà i avançat</div>
+  <div class="split-body split-navy" data-reveal>
+    <div class="split-tag" style="background:rgba(0,198,251,0.1);color:var(--cyan)">Idiomes &amp; Informàtica</div>
+    <h2 class="sh2 sh2-inv">Comunica't.<br><em>Creix.</em></h2>
+    <p class="sp sp-inv">Anglès, Català i Espanyol per a estrangers (ELE) amb certificats oficials DELE. Cursos ACTIC homologats per la Generalitat de Catalunya.</p>
+    <div class="split-list">
+      <div class="split-li split-li-inv">Anglès A1 → C1</div>
+      <div class="split-li split-li-inv">Català B1 → C1</div>
+      <div class="split-li split-li-inv">Espanyol ELE · Bàsic, Avançat i Integració (45h)</div>
+      <div class="split-li split-li-inv">Preparació examen DELE</div>
+      <div class="split-li split-li-inv">ACTIC bàsic, mitjà i avançat (24h)</div>
     </div>
-    <div style="margin-top:2rem">
-      <a href="#contacte" class="btn btn-cyan" style="display:inline-flex">Consultar horaris →</a>
-    </div>
+    <div style="margin-top:2rem"><a href="#contacte" class="btn btn-cyan">Consultar horaris →</a></div>
   </div>
 </div>
 
 <!-- ═══ CONTACT ═══ -->
 <div class="contact" id="contacte">
-  <div class="contact-map">
+  <div class="contact-left">
     <div style="position:relative">
-      <div class="section-eyebrow" style="color:var(--cyan)">Parlem</div>
-      <h2 class="section-h2 section-h2-inv">Sense<br><em>compromís.</em></h2>
-      <p class="section-p section-p-inv" style="margin-top:0.5rem;max-width:360px">El nostre equip t'orienta. Vine a visitar-nos o contacta'ns, et responem ràpidament.</p>
+      <div class="eyebrow eyebrow-inv">Parlem sense compromís</div>
+      <h2 class="sh2 sh2-inv">Contacta<br><em>amb nosaltres.</em></h2>
+      <p class="sp sp-inv" style="margin-top:0.5rem;max-width:340px">Et responem ràpidament i t'orientem sense cap compromís sobre quin curs s'adapta millor a tu.</p>
     </div>
     <div class="contact-details">
       <div class="cdet">
         <div class="cdet-icon">📞</div>
-        <div>
-          <div class="cdet-k">Telèfon</div>
-          <div class="cdet-v">977 22 22 77</div>
-        </div>
+        <div><div class="cdet-k">Telèfon</div><div class="cdet-v">977 22 22 77</div></div>
       </div>
       <div class="cdet">
         <div class="cdet-icon">✉️</div>
-        <div>
-          <div class="cdet-k">Email</div>
-          <div class="cdet-v">aulamagna@aulamagna.es</div>
-        </div>
+        <div><div class="cdet-k">Email</div><div class="cdet-v">aulamagna@aulamagna.es</div></div>
       </div>
       <div class="cdet">
         <div class="cdet-icon">📍</div>
-        <div>
-          <div class="cdet-k">Adreça</div>
-          <div class="cdet-v">Tarragona, Catalunya</div>
-        </div>
+        <div><div class="cdet-k">Adreça</div><div class="cdet-v">Tarragona, Catalunya</div></div>
       </div>
     </div>
   </div>
-  <div class="contact-form-wrap">
-    <div class="section-eyebrow">Formulari de contacte</div>
-    <h2 class="section-h2" style="font-size:1.8rem">Escriu-nos</h2>
+  <div class="contact-right">
+    <div class="eyebrow">Formulari</div>
+    <h2 class="sh2" style="font-size:1.75rem">Escriu-nos</h2>
     <form class="cf" onsubmit="return false">
       <div class="cf-row">
-        <div class="cf-field">
-          <label class="cf-label">Nom</label>
-          <input type="text" class="cf-input" placeholder="El teu nom">
-        </div>
-        <div class="cf-field">
-          <label class="cf-label">Telèfon</label>
-          <input type="tel" class="cf-input" placeholder="000 000 000">
-        </div>
+        <div class="cf-field"><label class="cf-label">Nom</label><input type="text" class="cf-input" placeholder="El teu nom"></div>
+        <div class="cf-field"><label class="cf-label">Telèfon</label><input type="tel" class="cf-input" placeholder="000 000 000"></div>
       </div>
-      <div class="cf-field">
-        <label class="cf-label">Email</label>
-        <input type="email" class="cf-input" placeholder="tu@email.com">
-      </div>
+      <div class="cf-field"><label class="cf-label">Email</label><input type="email" class="cf-input" placeholder="tu@email.com"></div>
       <div class="cf-field">
         <label class="cf-label">Àrea d'interès</label>
         <select class="cf-select">
@@ -878,11 +1064,8 @@
           <option>Altre</option>
         </select>
       </div>
-      <div class="cf-field">
-        <label class="cf-label">Missatge</label>
-        <textarea class="cf-ta" placeholder="Explica'ns què necessites…"></textarea>
-      </div>
-      <button type="submit" class="btn btn-cyan" style="margin-top:0.25rem;border:none;cursor:pointer">Enviar missatge →</button>
+      <div class="cf-field"><label class="cf-label">Missatge</label><textarea class="cf-ta" placeholder="Explica'ns què necessites…"></textarea></div>
+      <button type="submit" class="btn btn-cyan" style="border:none">Enviar missatge →</button>
     </form>
   </div>
 </div>
@@ -891,24 +1074,22 @@
 <footer>
   <div class="footer-top">
     <div>
-      <div class="footer-logo">
-        <img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna">
-      </div>
-      <p class="footer-tagline">Centre de formació a Tarragona des de 1990. Formació acadèmica, professional i idiomes per a totes les edats.</p>
+      <div class="footer-logo"><img src="https://www.aulamagna.es/images/aulamagna-logo-web-2025.png" alt="Aula Magna"></div>
+      <p class="footer-tag">Centre de formació a Tarragona des de 1990. Formació acadèmica, professional i idiomes per a totes les edats.</p>
     </div>
     <div>
-      <div class="ft-col-h">Formació</div>
-      <ul class="ft-links">
+      <div class="ft-h">Formació</div>
+      <ul class="ft-ul">
         <li><a href="#">Cicles Formatius</a></li>
         <li><a href="#">Repassos Escolars</a></li>
         <li><a href="#">Selectivitat</a></li>
         <li><a href="#">Graduat ESO</a></li>
-        <li><a href="#">Certificacions</a></li>
+        <li><a href="#">Certificats Prof.</a></li>
       </ul>
     </div>
     <div>
-      <div class="ft-col-h">Oposicions</div>
-      <ul class="ft-links">
+      <div class="ft-h">Oposicions</div>
+      <ul class="ft-ul">
         <li><a href="#">Mossos d'Esquadra</a></li>
         <li><a href="#">Guàrdia Urbana</a></li>
         <li><a href="#">Bombers</a></li>
@@ -917,8 +1098,8 @@
       </ul>
     </div>
     <div>
-      <div class="ft-col-h">Contacte</div>
-      <ul class="ft-links">
+      <div class="ft-h">Contacte</div>
+      <ul class="ft-ul">
         <li><a href="tel:977222277">977 22 22 77</a></li>
         <li><a href="mailto:aulamagna@aulamagna.es">aulamagna@aulamagna.es</a></li>
         <li><a href="#">Com arribar</a></li>
@@ -926,54 +1107,53 @@
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="footer-bot">
     <span class="fc">© 2025 Aula Magna · Tarragona</span>
-    <div class="fl">
-      <a href="#">Avís legal</a>
-      <a href="#">Privacitat</a>
-      <a href="#">Cookies</a>
-    </div>
+    <div class="fl"><a href="#">Avís legal</a><a href="#">Privacitat</a><a href="#">Cookies</a></div>
   </div>
 </footer>
 
 <script>
-// Nav solid on scroll
-const nav = document.getElementById('nav');
-const onScroll = () => nav.classList.toggle('solid', scrollY > 60);
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+// ── Tab switching ──
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + id));
+  // re-trigger reveals in new panel
+  document.querySelectorAll('#panel-' + id + ' [data-reveal]').forEach(el => {
+    el.classList.remove('on');
+    setTimeout(() => revealObs.observe(el), 50);
+  });
+}
 
-// Reveal on scroll
-const reveals = document.querySelectorAll('[data-reveal]');
+// ── Reveal on scroll ──
 const revealObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); revealObs.unobserve(e.target); }});
-}, { threshold: 0.1 });
-reveals.forEach(el => revealObs.observe(el));
+}, { threshold: 0.08 });
+document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
 
-// Counter animation
+// ── Counter ──
 function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-function runCount(el) {
-  const target = +el.dataset.count;
-  const dur = 1600;
-  const t0 = performance.now();
-  const tick = (now) => {
-    const p = Math.min((now - t0) / dur, 1);
-    el.textContent = Math.round(easeOut(p) * target).toLocaleString('ca');
-    if (p < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
 const countObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { runCount(e.target); countObs.unobserve(e.target); }});
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target, target = +el.dataset.count, t0 = performance.now();
+    const tick = now => {
+      const p = Math.min((now - t0) / 1500, 1);
+      el.textContent = Math.round(easeOut(p) * target).toLocaleString('ca');
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    countObs.unobserve(el);
+  });
 }, { threshold: 0.7 });
 document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-// Hero entrance
+// ── Hero entrance ──
 window.addEventListener('DOMContentLoaded', () => {
-  const ht = document.querySelector('.hero-text');
-  ht.style.cssText = 'opacity:0;transform:translateY(20px)';
+  const h = document.querySelector('.hero-text');
+  h.style.cssText = 'opacity:0;transform:translateY(18px)';
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    ht.style.cssText = 'opacity:1;transform:none;transition:opacity 0.9s cubic-bezier(.22,1,.36,1),transform 0.9s cubic-bezier(.22,1,.36,1)';
+    h.style.cssText = 'opacity:1;transform:none;transition:opacity 0.85s cubic-bezier(.22,1,.36,1),transform 0.85s cubic-bezier(.22,1,.36,1)';
   }));
 });
 </script>
