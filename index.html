@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula Magna | Centro de Formación · Tarragona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0E0D0C;
+      --ink-soft: #1C1A18;
+      --ink-muted: #2A2724;
+      --cream: #F5F0E8;
+      --cream-dim: #CCC6BA;
+      --amber: #D4852A;
+      --amber-bright: #F0A030;
+      --amber-pale: #F5D7A0;
+      --teal: #2E8B7A;
+      --teal-bright: #3AADA0;
+      --red: #C0392B;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(14,13,12,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,133,42,0.15);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .nav-logo span {
+      color: var(--amber);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--cream-dim);
+      text-decoration: none;
+      font-size: 0.825rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber-bright); }
+    .nav-cta {
+      background: var(--amber);
+      color: var(--ink) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--amber-bright) !important; color: var(--ink) !important; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(212,133,42,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(46,139,122,0.06) 0%, transparent 50%);
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 5rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 2rem;
+      height: 1px;
+      background: var(--amber);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--cream);
+      margin-bottom: 0.25rem;
+    }
+    .hero-title strong {
+      font-weight: 700;
+      color: var(--amber-bright);
+      display: block;
+      font-style: italic;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--cream-dim);
+    }
+    .hero-subtitle {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--cream-dim);
+      max-width: 420px;
+      margin: 1.75rem 0 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--ink);
+      padding: 0.9rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--amber-bright); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      padding: 0.9rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(245,240,232,0.25);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 5rem 5rem 2rem;
+    }
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(212,133,42,0.15);
+      border: 1px solid rgba(212,133,42,0.15);
+      width: 100%;
+      max-width: 400px;
+    }
+    .stat-block {
+      background: var(--ink-soft);
+      padding: 2.5rem 2rem;
+      transition: background 0.3s;
+    }
+    .stat-block:hover { background: var(--ink-muted); }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--amber-bright);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 2;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 3rem;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    .scroll-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      writing-mode: vertical-rl;
+    }
+
+    /* ─── TICKER ─── */
+    .ticker-wrap {
+      background: var(--amber);
+      padding: 0.65rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-track {
+      display: inline-flex;
+      animation: ticker 28s linear infinite;
+    }
+    .ticker-item {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding: 0 2.5rem;
+    }
+    .ticker-dot {
+      color: rgba(14,13,12,0.4);
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 6rem 5rem; }
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 1.5rem;
+      height: 1px;
+      background: var(--amber);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+    .section-title strong { font-weight: 700; }
+    .section-title em { font-style: italic; color: var(--amber-bright); }
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--cream-dim);
+      max-width: 560px;
+      line-height: 1.8;
+    }
+
+    /* ─── AREAS ─── */
+    .areas-section {
+      background: var(--ink-soft);
+      padding: 6rem 5rem;
+    }
+    .areas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      gap: 2rem;
+    }
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(245,240,232,0.06);
+    }
+    .area-card {
+      background: var(--ink-soft);
+      padding: 2.75rem 2.5rem;
+      border-top: 3px solid transparent;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .area-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 0;
+      background: linear-gradient(to top, rgba(212,133,42,0.05), transparent);
+      transition: height 0.4s;
+    }
+    .area-card:hover::before { height: 100%; }
+    .area-card:hover {
+      border-color: var(--amber);
+      background: var(--ink-muted);
+      transform: translateY(-2px);
+    }
+    .area-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: rgba(212,133,42,0.12);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+    .area-card:hover .area-icon { background: rgba(212,133,42,0.25); }
+    .area-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .area-desc {
+      font-size: 0.875rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+    }
+    .area-count {
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .area-card:hover .area-count { opacity: 1; transform: translateY(0); }
+
+    /* ─── FEATURED PROGRAMS ─── */
+    .programs-section { padding: 6rem 5rem; }
+    .programs-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+    .programs-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.5rem;
+    }
+    .program-featured {
+      background: var(--ink-soft);
+      border: 1px solid rgba(245,240,232,0.06);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .program-featured::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(212,133,42,0.15), transparent 70%);
+    }
+    .program-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(212,133,42,0.1);
+      padding: 0.3rem 0.75rem;
+      display: inline-block;
+      margin-bottom: 1.25rem;
+    }
+    .program-name {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .program-desc {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+    .program-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .program-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .program-meta-val {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--amber-bright);
+    }
+    .program-meta-key {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .program-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .program-card {
+      background: var(--ink-soft);
+      border: 1px solid rgba(245,240,232,0.06);
+      padding: 1.75rem 2rem;
+      transition: border-color 0.3s, background 0.3s;
+      cursor: pointer;
+      flex: 1;
+    }
+    .program-card:hover { border-color: rgba(212,133,42,0.4); background: var(--ink-muted); }
+    .program-card .program-name { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .program-card .program-desc { font-size: 0.825rem; margin-bottom: 1.25rem; }
+
+    /* ─── OPPOSITION BAR ─── */
+    .opos-section {
+      background: var(--amber);
+      padding: 4rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+    .opos-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .opos-title em { font-style: italic; font-weight: 300; }
+    .opos-desc {
+      color: rgba(14,13,12,0.7);
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      max-width: 600px;
+    }
+    .btn-dark {
+      background: var(--ink);
+      color: var(--amber-bright);
+      padding: 1rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: var(--ink-soft); }
+
+    /* ─── LANGUAGES & IT ─── */
+    .extra-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .extra-block {
+      padding: 5rem;
+      position: relative;
+    }
+    .extra-block:first-child { background: var(--ink-soft); }
+    .extra-block:last-child { background: var(--ink-muted); }
+    .lang-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .lang-tag {
+      background: rgba(58,173,160,0.1);
+      border: 1px solid rgba(58,173,160,0.25);
+      color: var(--teal-bright);
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+    }
+    .lang-tag:hover { background: rgba(58,173,160,0.2); }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      background: var(--ink-soft);
+      padding: 6rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .contact-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: rgba(212,133,42,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+    .contact-val {
+      font-size: 1.1rem;
+      color: var(--cream);
+      font-weight: 500;
+    }
+    .contact-key {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+      margin-bottom: 0.2rem;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream-dim);
+    }
+    .form-input, .form-select, .form-textarea {
+      background: var(--ink);
+      border: 1px solid rgba(245,240,232,0.1);
+      color: var(--cream);
+      padding: 0.85rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--amber);
+    }
+    .form-select option { background: var(--ink); }
+    .form-textarea { resize: vertical; min-height: 100px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(245,240,232,0.06);
+      padding: 3rem 5rem 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .nav-logo { font-size: 1.3rem; display: block; margin-bottom: 0.75rem; }
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: var(--cream-dim);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.25rem;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-links a {
+      font-size: 0.875rem;
+      color: var(--cream-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--amber-bright); }
+    .footer-bottom {
+      border-top: 1px solid rgba(245,240,232,0.06);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-copy {
+      font-size: 0.775rem;
+      color: rgba(245,240,232,0.3);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-legal a {
+      font-size: 0.775rem;
+      color: rgba(245,240,232,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: var(--cream-dim); }
+
+    /* ─── ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+    .fade-up:nth-child(5) { transition-delay: 0.4s; }
+    .fade-up:nth-child(6) { transition-delay: 0.5s; }
+
+    /* ─── DIVIDER ─── */
+    .rule {
+      width: 3rem;
+      height: 2px;
+      background: var(--amber);
+      margin: 1.5rem 0;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 7rem 1.5rem 3rem; }
+      .hero-right { padding: 3rem 1.5rem 4rem; }
+      .hero-stats-grid { max-width: 100%; }
+      section, .areas-section, .programs-section { padding: 4rem 1.5rem; }
+      .areas-grid { grid-template-columns: 1fr; }
+      .programs-grid { grid-template-columns: 1fr; }
+      .programs-header { grid-template-columns: 1fr; gap: 1.5rem; }
+      .opos-section { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .extra-section { grid-template-columns: 1fr; }
+      .extra-block { padding: 3rem 1.5rem; }
+      .contact-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      .footer-grid { grid-template-columns: 1fr 1fr; padding: 0; }
+      footer { padding: 3rem 1.5rem 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      .scroll-hint { display: none; }
+      .areas-header { flex-direction: column; align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">Aula<span>Magna</span></a>
+    <ul class="nav-links">
+      <li><a href="#areas">Formación</a></li>
+      <li><a href="#programas">Programas</a></li>
+      <li><a href="#oposiciones">Oposiciones</a></li>
+      <li><a href="#idiomas">Idiomas</a></li>
+      <li><a href="#contacto" class="nav-cta">Contactar</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-left">
+      <div class="hero-eyebrow">Centro de Formación · Tarragona</div>
+      <h1 class="hero-title">
+        Tu futuro<br>
+        <strong>empieza aquí.</strong>
+        <em>Desde 1990.</em>
+      </h1>
+      <p class="hero-subtitle">
+        Formación profesional, idiomas, oposiciones y acceso a ciclos formativos. En Tarragona, para toda la provincia.
+      </p>
+      <div class="hero-actions">
+        <a href="#areas" class="btn-primary">Ver cursos <span>→</span></a>
+        <a href="#contacto" class="btn-outline">Contactar</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats-grid">
+        <div class="stat-block">
+          <div class="stat-number" data-count="30">0</div>
+          <div class="stat-label">Años de experiencia</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number" data-count="50">0</div>
+          <div class="stat-label">Cursos activos</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number" data-count="95">0</div>
+          <div class="stat-label">% Satisfacción</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number" data-count="5000">0</div>
+          <div class="stat-label">Alumnos formados</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Explorar</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Ciclos Formativos <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Oposiciones <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Inglés · Catalán · Español <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Repasos ESO & Bachillerato <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Selectividad <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Certificaciones Profesionales <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">ACTIC Informática <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Seguridad Privada <span class="ticker-dot">◆</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Ciclos Formativos <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Oposiciones <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Inglés · Catalán · Español <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Repasos ESO & Bachillerato <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Selectividad <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Certificaciones Profesionales <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">ACTIC Informática <span class="ticker-dot">◆</span></span>
+      <span class="ticker-item">Seguridad Privada <span class="ticker-dot">◆</span></span>
+    </div>
+  </div>
+
+  <!-- AREAS -->
+  <section class="areas-section" id="areas">
+    <div class="areas-header">
+      <div>
+        <div class="section-label">Áreas de formación</div>
+        <h2 class="section-title">Todo lo que<br><strong>necesitas aprender.</strong></h2>
+      </div>
+      <p class="section-lead" style="max-width:360px">Desde el acceso a ciclos formativos hasta la preparación de oposiciones. Un centro, todas las opciones.</p>
+    </div>
+    <div class="areas-grid">
+      <div class="area-card fade-up">
+        <div class="area-icon">📚</div>
+        <div class="area-title">Repasos & Apoyo Escolar</div>
+        <div class="area-desc">Primaria, ESO, Bachillerato, Selectividad y ciclos formativos. Refuerzo personalizado para que ningún alumno se quede atrás.</div>
+        <div class="area-count">Primaria → Universidad →</div>
+      </div>
+      <div class="area-card fade-up">
+        <div class="area-icon">🎓</div>
+        <div class="area-title">Ciclos Formativos</div>
+        <div class="area-desc">Grado Medio y Superior: Enfermería, Emergencias, Farmacia, Educación Infantil, Dietética, Informática y más. Formación oficial homologada.</div>
+        <div class="area-count">Grado Medio & Superior →</div>
+      </div>
+      <div class="area-card fade-up">
+        <div class="area-icon">🏛️</div>
+        <div class="area-title">Oposiciones</div>
+        <div class="area-desc">Preparación intensiva para acceso a la Administración Pública: Mossos, Bombers, Guardia Urbana, Sanidad, Justicia y docencia.</div>
+        <div class="area-count">Ayuntamiento · Generalitat · Estado →</div>
+      </div>
+      <div class="area-card fade-up">
+        <div class="area-icon">🌍</div>
+        <div class="area-title">Idiomas</div>
+        <div class="area-desc">Inglés, Catalán y Español para extranjeros (ELE). Preparación para exámenes oficiales DELE. Niveles básico y avanzado.</div>
+        <div class="area-count">Inglés · Catalán · ELE →</div>
+      </div>
+      <div class="area-card fade-up">
+        <div class="area-icon">💻</div>
+        <div class="area-title">Informática</div>
+        <div class="area-desc">Cursos ACTIC homologados (24h) y formación general en herramientas digitales para el trabajo y la vida cotidiana.</div>
+        <div class="area-count">ACTIC · Ofimática →</div>
+      </div>
+      <div class="area-card fade-up">
+        <div class="area-icon">🛡️</div>
+        <div class="area-title">Seguridad</div>
+        <div class="area-desc">Formación en seguridad privada, control de accesos, especialidad en explosivos y guarda rural. Certificaciones oficiales.</div>
+        <div class="area-count">Seguridad Privada · Rural →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PROGRAMS -->
+  <section class="programs-section" id="programas">
+    <div class="programs-header">
+      <div>
+        <div class="section-label">Programas destacados</div>
+        <h2 class="section-title">Elige tu<br><em>camino.</em></h2>
+      </div>
+      <p class="section-lead">Programas diseñados para quien quiere resultados reales. Formación con salida profesional directa.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-featured fade-up">
+        <div class="program-tag">Más solicitado</div>
+        <h3 class="program-name">Ciclos Formativos de Grado Superior</h3>
+        <p class="program-desc">Accede a títulos oficiales de Técnico Superior en Educación Infantil, Animación Deportiva, Laboratorio Clínico, Dietética o Administración de Sistemas Informáticos.</p>
+        <div class="program-meta">
+          <div class="program-meta-item">
+            <span class="program-meta-val">2</span>
+            <span class="program-meta-key">Años de formación</span>
+          </div>
+          <div class="program-meta-item">
+            <span class="program-meta-val">Oficial</span>
+            <span class="program-meta-key">Título reconocido</span>
+          </div>
+          <div class="program-meta-item">
+            <span class="program-meta-val">5+</span>
+            <span class="program-meta-key">Especialidades</span>
+          </div>
+        </div>
+        <a href="#contacto" class="btn-primary">Solicitar información →</a>
+      </div>
+      <div class="program-stack">
+        <div class="program-card fade-up">
+          <div class="program-tag">Preparación de examen</div>
+          <h3 class="program-name">Selectividad (PAU)</h3>
+          <p class="program-desc">Preparación intensiva para la prueba de acceso a la universidad con profesorado especializado por materias.</p>
+          <a href="#contacto" class="btn-outline" style="font-size:0.8rem; padding: 0.6rem 1.25rem;">Más info →</a>
+        </div>
+        <div class="program-card fade-up">
+          <div class="program-tag">Certificación profesional</div>
+          <h3 class="program-name">Graduado ESO</h3>
+          <p class="program-desc">Obtén el título de educación secundaria obligatoria para adultos. Imprescindible para acceder a ciclos y empleo.</p>
+          <a href="#contacto" class="btn-outline" style="font-size:0.8rem; padding: 0.6rem 1.25rem;">Más info →</a>
+        </div>
+        <div class="program-card fade-up">
+          <div class="program-tag">610 horas</div>
+          <h3 class="program-name">Operaciones en Planta Química</h3>
+          <p class="program-desc">Certificado de profesionalidad oficial. Formación técnica completa para el sector industrial petroquímico de Tarragona.</p>
+          <a href="#contacto" class="btn-outline" style="font-size:0.8rem; padding: 0.6rem 1.25rem;">Más info →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPOSICIONES -->
+  <div class="opos-section" id="oposiciones">
+    <div>
+      <h2 class="opos-title">Prepara tu oposición<br><em>con garantías.</em></h2>
+      <p class="opos-desc">
+        Mossos d'Esquadra · Guardia Urbana · Bombers · Agents Rurals · Docència · Sanitat ICS · Justícia · Administració de l'Estat
+      </p>
+    </div>
+    <a href="#contacto" class="btn-dark">Ver oposiciones →</a>
+  </div>
+
+  <!-- IDIOMAS + IT -->
+  <div class="extra-section" id="idiomas">
+    <div class="extra-block fade-up">
+      <div class="section-label">Idiomas</div>
+      <h2 class="section-title" style="font-size:2rem">Aprende a<br><em>comunicarte.</em></h2>
+      <div class="rule"></div>
+      <p class="section-lead" style="font-size:0.9rem">Cursos de inglés, catalán y español para extranjeros (ELE) con preparación para certificados oficiales DELE. Todos los niveles.</p>
+      <div class="lang-tags">
+        <span class="lang-tag">Inglés A1-C1</span>
+        <span class="lang-tag">Català B1-C1</span>
+        <span class="lang-tag">Español ELE Básico</span>
+        <span class="lang-tag">Español ELE Avanzado</span>
+        <span class="lang-tag">ELE Integración (45h)</span>
+        <span class="lang-tag">DELE Examen</span>
+      </div>
+    </div>
+    <div class="extra-block fade-up">
+      <div class="section-label">Informática</div>
+      <h2 class="section-title" style="font-size:2rem">Domina la<br><em>tecnología.</em></h2>
+      <div class="rule"></div>
+      <p class="section-lead" style="font-size:0.9rem">Cursos ACTIC homologados por la Generalitat de Catalunya (24 horas) y formación en ofimática para el trabajo y la vida diaria.</p>
+      <div class="lang-tags">
+        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">ACTIC Bàsic</span>
+        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">ACTIC Mitjà</span>
+        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">Ofimàtica</span>
+        <span class="lang-tag" style="background: rgba(212,133,42,0.1); border-color: rgba(212,133,42,0.3); color: var(--amber-bright);">Informàtica General</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contacto">
+    <div>
+      <div class="section-label">Contacto</div>
+      <h2 class="section-title">Hablemos<br><strong>sin compromiso.</strong></h2>
+      <div class="rule"></div>
+      <p class="section-lead" style="font-size:0.9rem; margin-bottom: 2.5rem">¿Tienes dudas sobre qué curso elegir? Nuestro equipo te orienta sin compromiso. Ven a visitarnos o contáctanos.</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-key">Teléfono</div>
+            <div class="contact-val">977 22 22 77</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-key">Email</div>
+            <div class="contact-val">aulamagna@aulamagna.es</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-key">Dirección</div>
+            <div class="contact-val">Tarragona, España</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="return false">
+      <div class="form-row">
+        <div class="form-field">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-input" placeholder="Tu nombre">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Teléfono</label>
+          <input type="tel" class="form-input" placeholder="000 000 000">
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="tu@email.com">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Área de interés</label>
+        <select class="form-select">
+          <option value="">Selecciona una opción…</option>
+          <option>Ciclos Formativos</option>
+          <option>Oposiciones</option>
+          <option>Repasos & Apoyo Escolar</option>
+          <option>Selectividad / PAU</option>
+          <option>Idiomas</option>
+          <option>Informática / ACTIC</option>
+          <option>Seguridad Privada</option>
+          <option>Certificados Profesionales</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Mensaje (opcional)</label>
+        <textarea class="form-textarea" placeholder="Cuéntanos qué necesitas…"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:0.5rem">Enviar consulta →</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">Aula<span style="color:var(--amber)">Magna</span></a>
+        <p class="footer-tagline">Centro de formación en Tarragona desde 1990. Formación académica, profesional e idiomas para todas las edades.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Formación</div>
+        <ul class="footer-links">
+          <li><a href="#">Ciclos Formativos</a></li>
+          <li><a href="#">Repasos Escolares</a></li>
+          <li><a href="#">Selectividad</a></li>
+          <li><a href="#">Graduado ESO</a></li>
+          <li><a href="#">Certificaciones</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Oposiciones</div>
+        <ul class="footer-links">
+          <li><a href="#">Mossos d'Esquadra</a></li>
+          <li><a href="#">Guardia Urbana</a></li>
+          <li><a href="#">Bombers</a></li>
+          <li><a href="#">Docència</a></li>
+          <li><a href="#">Sanitat ICS</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <ul class="footer-links">
+          <li><a href="tel:977222277">977 22 22 77</a></li>
+          <li><a href="mailto:aulamagna@aulamagna.es">aulamagna@aulamagna.es</a></li>
+          <li><a href="#">Cómo llegar</a></li>
+          <li><a href="#">Horarios</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Aula Magna · Tarragona</span>
+      <div class="footer-legal">
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Nav scroll ──
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Intersection observer for fade-up ──
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => io.observe(el));
+
+    // ── Counter animation ──
+    function animateCount(el) {
+      const target = parseInt(el.dataset.count);
+      const duration = 1800;
+      const start = performance.now();
+      const step = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(ease * target);
+        el.textContent = current.toLocaleString('es');
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { animateCount(e.target); statsObserver.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    statNumbers.forEach(n => statsObserver.observe(n));
+
+    // ── Smooth staggered hero animation on load ──
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroEl = document.querySelector('.hero-left');
+      heroEl.style.opacity = '0';
+      heroEl.style.transform = 'translateY(20px)';
+      setTimeout(() => {
+        heroEl.style.transition = 'opacity 1s ease, transform 1s ease';
+        heroEl.style.opacity = '1';
+        heroEl.style.transform = 'translateY(0)';
+      }, 100);
+    });
+  </script>
+</body>
+</html>
